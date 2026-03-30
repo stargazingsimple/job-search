@@ -1,3 +1,7 @@
 @theme {
   --font-sans: 'Open Sans', sans-serif;
+
+  --color-brand-gray-1: #dadce0;
+  --color-brand-blue-1: #1967d2;
+  --color-brand-green-1: #137333;
 }
