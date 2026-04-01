@@ -1,5 +1,5 @@
 <script>
-import MainNav from '@/components/MainNav.vue'
+import MainNav from '@/components/MainNav/MainNav.vue'
 
 export default {
   name: 'App',
