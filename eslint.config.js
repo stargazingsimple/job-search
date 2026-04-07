@@ -17,12 +17,13 @@ export default defineConfig([
     languageOptions: {
       globals: {
         ...globals.browser,
+        ...globals.vitest,
       },
     },
   },
 
   js.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
+  ...pluginVue.configs['flat/recommended'],
 
   {
     ...pluginVitest.configs.recommended,
