@@ -13,11 +13,16 @@ describe('MainNav', () => {
     wrapper.unmount()
   })
 
-  it("should render Careers link with '/' href attribute", () => {
+  it.each`
+    text         | link
+    ${'Careers'} | ${'/'}
+    ${'Teams'}   | ${'/teams'}
+    ${'Jobs'}    | ${'/jobs'}
+  `('should render $text link with $link href attribute', ({ text, link }) => {
     createComponent()
 
-    const linkElement = findElementByText(wrapper, 'a', 'Careers')
+    const linkElement = findElementByText(wrapper, 'a', text)
 
-    expect(linkElement.attributes('href')).toBe('/')
+    expect(linkElement.attributes('href')).toBe(link)
   })
 })
