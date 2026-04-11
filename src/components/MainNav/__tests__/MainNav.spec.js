@@ -25,4 +25,22 @@ describe('MainNav', () => {
 
     expect(linkElement.attributes('href')).toBe(link)
   })
+
+  it("should displays 'ProfileImage' component", async () => {
+    let profileImageComponent
+
+    createComponent()
+
+    profileImageComponent = wrapper.findComponent({ name: 'ProfileImage' })
+
+    expect(profileImageComponent.exists()).toBe(false)
+
+    const actionButtonComponent = wrapper.findComponent({ name: 'ActionButton' })
+
+    await actionButtonComponent.trigger('click')
+
+    profileImageComponent = wrapper.findComponent({ name: 'ProfileImage' })
+
+    expect(profileImageComponent.exists()).toBe(true)
+  })
 })

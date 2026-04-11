@@ -1,6 +1,13 @@
 <script>
+import ActionButton from '@/components/ActionButton/ActionButton.vue'
+import ProfileImage from '@/components/ProfileImage/ProfileImage.vue'
+
 export default {
   name: 'MainNav',
+  components: {
+    ProfileImage,
+    ActionButton,
+  },
   data() {
     return {
       items: [
@@ -13,7 +20,13 @@ export default {
           link: '/jobs',
         },
       ],
+      isLoggedIn: false,
     }
+  },
+  methods: {
+    loginUser() {
+      this.isLoggedIn = true
+    },
   },
 }
 </script>
@@ -30,6 +43,10 @@ export default {
             </li>
           </ul>
         </nav>
+        <div class="ml-auto flex h-full items-center">
+          <profile-image v-if="isLoggedIn" />
+          <action-button v-else @click="loginUser" />
+        </div>
       </div>
     </div>
   </header>
