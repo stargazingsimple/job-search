@@ -1,0 +1,16 @@
+<script>
+export default {
+  name: 'TheSubNav',
+}
+</script>
+
+<template>
+  <div class="border-brand-gray-1 h-16 w-full border-b border-solid bg-white">
+    <div class="flex h-full items-center px-8">
+      <div>
+        <fa-icon icon="search" class="mr-3" />
+        <span><span class="text-brand-green-1">1653</span> jobs matched</span>
+      </div>
+    </div>
+  </div>
+</template>

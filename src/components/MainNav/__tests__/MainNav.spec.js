@@ -6,7 +6,11 @@ describe('MainNav', () => {
   let wrapper
 
   const createComponent = () => {
-    wrapper = mount(MainNav)
+    wrapper = mount(MainNav, {
+      global: {
+        stubs: ['fa-icon'],
+      },
+    })
   }
 
   afterEach(() => {
