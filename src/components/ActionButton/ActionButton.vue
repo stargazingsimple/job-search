@@ -1,13 +1,38 @@
 <script>
 export default {
   name: 'ActionButton',
+  props: {
+    text: {
+      type: String,
+      default: 'Click me!',
+    },
+    type: {
+      type: String,
+      default: 'primary',
+      validator(value) {
+        return ['primary', 'secondary'].includes(value)
+      },
+    },
+  },
 }
 </script>
 
 <template>
-  <button
-    class="bg-brand-blue-1 hover:shadow-blue cursor-pointer rounded border-0 px-5 py-3 font-medium text-white"
-  >
-    Sign in
-  </button>
+  <button :class="type">{{ text }}</button>
 </template>
+
+<style scoped>
+@reference '../../styles/main.css';
+
+button {
+  @apply cursor-pointer rounded px-5 py-3 font-medium;
+}
+
+.primary {
+  @apply bg-brand-blue-1 hover:shadow-blue border-0 text-white;
+}
+
+.secondary {
+  @apply text-brand-blue-1 hover:bg-brand-blue-2 bg-transparent hover:text-white;
+}
+</style>
