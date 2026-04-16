@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'ActionButton',
+  name: 'BaseButton',
   props: {
     text: {
       type: String,
@@ -22,7 +22,7 @@ export default {
 </template>
 
 <style scoped>
-@reference '../../styles/main.css';
+@reference '@/styles/main.css';
 
 button {
   @apply cursor-pointer rounded px-5 py-3 font-medium;

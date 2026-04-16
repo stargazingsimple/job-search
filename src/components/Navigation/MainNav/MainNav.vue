@@ -1,14 +1,14 @@
 <script>
-import ActionButton from '@/components/ActionButton/ActionButton.vue'
-import ProfileImage from '@/components/ProfileImage/ProfileImage.vue'
-import TheSubNav from '@/components/TheSubNav/TheSubNav.vue'
+import BaseButton from '@/components/UI/BaseButton/BaseButton.vue'
+import ProfileImage from '@/components/Navigation/ProfileImage/ProfileImage.vue'
+import TheSubNav from '@/components/Main/TheSubNav/TheSubNav.vue'
 
 export default {
   name: 'MainNav',
   components: {
     TheSubNav,
     ProfileImage,
-    ActionButton,
+    BaseButton,
   },
   data() {
     return {
@@ -25,6 +25,11 @@ export default {
       isLoggedIn: false,
     }
   },
+  computed: {
+    headerHeightClass() {
+      return this.isLoggedIn ? 'h-32' : 'h-16'
+    },
+  },
   methods: {
     loginUser() {
       this.isLoggedIn = true
@@ -34,7 +39,7 @@ export default {
 </script>
 
 <template>
-  <header class="w-full text-sm">
+  <header :class="['w-full', 'text-sm', headerHeightClass]">
     <div class="fixed top-0 left-0 h-16 w-full bg-white">
       <div class="border-brand-gray-1 mx-auto flex h-full flex-nowrap border-b border-solid px-8">
         <a href="/" class="flex h-full items-center text-xl">Careers</a>
@@ -47,7 +52,7 @@ export default {
         </nav>
         <div class="ml-auto flex h-full items-center">
           <profile-image v-if="isLoggedIn" />
-          <action-button v-else text="Sign in" @click="loginUser" />
+          <base-button v-else text="Sign in" @click="loginUser" />
         </div>
       </div>
       <the-sub-nav v-if="isLoggedIn" />

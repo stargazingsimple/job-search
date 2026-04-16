@@ -1,9 +1,11 @@
 <script>
-import MainNav from '@/components/MainNav/MainNav.vue'
+import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
+import TheHero from '@/components/Main/TheHero/TheHero.vue'
 
 export default {
   name: 'App',
   components: {
+    TheHero,
     MainNav,
   },
 }
@@ -11,4 +13,5 @@ export default {
 
 <template>
   <main-nav />
+  <the-hero />
 </template>

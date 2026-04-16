@@ -1,15 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { findElementByText } from '@/tests/utils.js'
-import ActionButton from '@/components/ActionButton/ActionButton.vue'
+import BaseButton from '@/components/UI/BaseButton/BaseButton.vue'
 
 const TEXT_PROP = 'Click me'
 const TYPE_PROP = 'secondary'
 
-describe('ActionButton', () => {
+describe('BaseButton', () => {
   let wrapper
 
   const createComponent = () => {
-    wrapper = mount(ActionButton, {
+    wrapper = mount(BaseButton, {
       props: {
         text: TEXT_PROP,
         type: TYPE_PROP,

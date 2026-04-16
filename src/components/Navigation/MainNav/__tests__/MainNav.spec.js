@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { findElementByText } from '@/tests/utils.js'
-import MainNav from '@/components/MainNav/MainNav.vue'
+import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
 
 describe('MainNav', () => {
   let wrapper
@@ -39,7 +39,7 @@ describe('MainNav', () => {
 
     expect(profileImageComponent.exists()).toBe(false)
 
-    const actionButtonComponent = wrapper.findComponent({ name: 'ActionButton' })
+    const actionButtonComponent = wrapper.findComponent({ name: 'BaseButton' })
 
     await actionButtonComponent.trigger('click')
 

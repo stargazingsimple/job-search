@@ -1,2 +1,2 @@
-export const findElementByText = (wrapper, element, text) =>
-  wrapper.findAll(element).find((el) => el.text() === text)
+export const findElementByText = (wrapper, selector, text) =>
+  wrapper.findAll(selector).find((el) => el.text() === text)
