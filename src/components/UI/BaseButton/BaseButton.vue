@@ -25,11 +25,11 @@ export default {
 @reference '@/styles/main.css';
 
 button {
-  @apply cursor-pointer rounded px-5 py-3 font-medium;
+  @apply cursor-pointer px-5 py-3 font-medium;
 }
 
 .primary {
-  @apply bg-brand-blue-1 hover:shadow-blue border-0 text-white;
+  @apply bg-brand-blue-1 hover:shadow-blue rounded text-white;
 }
 
 .secondary {
