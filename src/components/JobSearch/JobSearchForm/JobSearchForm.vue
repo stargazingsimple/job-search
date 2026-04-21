@@ -4,6 +4,7 @@ import { useField, useForm } from 'vee-validate'
 import entity from '@/utils/entities/jobSearch.js'
 import validationSchema from '@/utils/validation/schemas/jobSearch.js'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
+import TextInput from '@/components/Shared/TextInput/TextInput.vue'
 
 const fields = reactive({})
 
@@ -34,39 +35,27 @@ const handleSubmit = async () => {
   >
     <fa-icon icon="search" class="mr-3 ml-4" />
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
-      <div class="relative flex h-full flex-1 items-center pr-3">
-        <label for="role" class="absolute -top-10 left-0">Role</label>
-        <input
-          id="role"
-          v-model="fields['role'].value"
-          name="role"
-          type="text"
-          placeholder="Software engineer"
-          class="w-full text-lg font-normal focus:outline-none"
-        />
-        <span class="text-brand-red-1 absolute top-12 left-0">
-          {{ fields['role'].errorMessage }}
-        </span>
-      </div>
+      <text-input
+        id="role"
+        v-model="fields['role'].value"
+        :error-message="fields['role'].errorMessage"
+        placeholder="Software engineer"
+        label="Role"
+        class="pr-3"
+      />
       <span
         class="border-brand-gray-3 bg-brand-gray-2 flex h-full items-center border-r border-l px-3"
       >
         in
       </span>
-      <div class="relative flex h-full flex-1 items-center pl-3">
-        <label for="location" class="absolute -top-10 left-0">Where?</label>
-        <input
-          id="location"
-          v-model="fields['location'].value"
-          name="location"
-          type="text"
-          placeholder="Los Angeles"
-          class="w-full text-lg font-normal focus:outline-none"
-        />
-        <span class="text-brand-red-1 absolute top-12 left-0">
-          {{ fields['location'].errorMessage }}
-        </span>
-      </div>
+      <text-input
+        id="location"
+        v-model="fields['location'].value"
+        :error-message="fields['location'].errorMessage"
+        placeholder="Los Angeles"
+        label="Where?"
+        class="pl-3"
+      />
     </div>
     <base-button type="secondary" text="Search" class="rounded-r-3xl" />
   </form>
