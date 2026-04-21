@@ -1,7 +1,7 @@
 <script>
-import BaseButton from '@/components/UI/BaseButton/BaseButton.vue'
+import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import ProfileImage from '@/components/Navigation/ProfileImage/ProfileImage.vue'
-import TheSubNav from '@/components/Main/TheSubNav/TheSubNav.vue'
+import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
 
 export default {
   name: 'MainNav',

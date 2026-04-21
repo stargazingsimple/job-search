@@ -5,7 +5,11 @@ describe('App', () => {
   let wrapper
 
   const createComponent = () => {
-    wrapper = mount(App)
+    wrapper = mount(App, {
+      global: {
+        stubs: ['fa-icon'],
+      },
+    })
   }
 
   afterEach(() => {

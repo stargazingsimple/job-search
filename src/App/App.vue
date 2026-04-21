@@ -1,6 +1,6 @@
 <script>
 import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
-import TheHero from '@/components/Main/TheHero/TheHero.vue'
+import TheHero from '@/components/JobSearch/TheHero/TheHero.vue'
 
 export default {
   name: 'App',

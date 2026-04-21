@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { findElementByText } from '@/tests/utils.js'
-import BaseButton from '@/components/UI/BaseButton/BaseButton.vue'
+import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 
 const TEXT_PROP = 'Click me'
 const TYPE_PROP = 'secondary'
