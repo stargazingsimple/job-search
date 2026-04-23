@@ -1,13 +1,18 @@
 <script>
 export default {
   name: 'TheSubNav',
+  computed: {
+    onJobResultsPage() {
+      return this.$route.name === 'job-results'
+    },
+  },
 }
 </script>
 
 <template>
   <div class="border-brand-gray-1 h-16 w-full border-b border-solid bg-white">
     <div class="flex h-full items-center px-8">
-      <div>
+      <div v-if="onJobResultsPage">
         <fa-icon icon="search" class="mr-3" />
         <span><span class="text-brand-green-1">1653</span> jobs matched</span>
       </div>

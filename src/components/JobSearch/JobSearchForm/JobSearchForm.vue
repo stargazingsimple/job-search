@@ -1,14 +1,16 @@
 <script setup>
 import { reactive } from 'vue'
 import { useField, useForm } from 'vee-validate'
-import entity from '@/utils/entities/jobSearch.js'
-import validationSchema from '@/utils/validation/schemas/jobSearch.js'
+import { useRouter } from 'vue-router'
+import entity from '@/utils/entities/job-search.js'
+import validationSchema from '@/utils/validation/schemas/job-search.js'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import TextInput from '@/components/Shared/TextInput/TextInput.vue'
 
 const fields = reactive({})
 
-const { validate, values, handleReset } = useForm({ validationSchema })
+const { push } = useRouter()
+const { validate, values } = useForm({ validationSchema })
 
 entity.forEach(({ fieldName, initialValue }) => {
   const { value, errorMessage } = useField(fieldName, undefined, {
@@ -22,8 +24,9 @@ const handleSubmit = async () => {
   const { valid } = await validate()
 
   if (valid) {
-    console.log(values)
-    handleReset()
+    const { role, location } = values
+
+    push({ name: 'job-results', query: { role, location } })
   }
 }
 </script>

@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils'
+import router from '@/router/index.js'
 import App from '@/App/App.vue'
 
 describe('App', () => {
@@ -8,6 +9,7 @@ describe('App', () => {
     wrapper = mount(App, {
       global: {
         stubs: ['fa-icon'],
+        plugins: [router],
       },
     })
   }

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { findElementByText } from '@/tests/utils.js'
+import router from '@/router/index.js'
 import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
 
 describe('MainNav', () => {
@@ -9,6 +10,7 @@ describe('MainNav', () => {
     wrapper = mount(MainNav, {
       global: {
         stubs: ['fa-icon'],
+        plugins: [router],
       },
     })
   }
@@ -20,8 +22,7 @@ describe('MainNav', () => {
   it.each`
     text         | link
     ${'Careers'} | ${'/'}
-    ${'Teams'}   | ${'/teams'}
-    ${'Jobs'}    | ${'/jobs'}
+    ${'Jobs'}    | ${'/job/results'}
   `('should render $text link with $link href attribute', ({ text, link }) => {
     createComponent()
 
