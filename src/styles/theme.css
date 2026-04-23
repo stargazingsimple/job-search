@@ -10,4 +10,5 @@
   --color-brand-red-1: oklch(57.7% 0.245 27.325);
 
   --shadow-blue: 0 0 3px 3px #4285f4;
+  --shadow-gray: 0 1px 3px 0 rgba(60, 64, 67, 0.3);
 }
