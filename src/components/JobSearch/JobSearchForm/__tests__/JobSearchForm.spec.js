@@ -1,7 +1,18 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { findComponentByPropValue } from '@/tests/utils.js'
-import router from '@/router/index.js'
+import { findComponentByPropertyValue } from '@/tests/utils.js'
 import JobSearchForm from '@/components/JobSearch/JobSearchForm/JobSearchForm.vue'
+
+const { push } = vi.hoisted(() => {
+  return {
+    push: vi.fn(),
+  }
+})
+
+vi.mock('vue-router', () => {
+  return {
+    useRouter: vi.fn().mockReturnValue({ push }),
+  }
+})
 
 describe('JobSearchForm', () => {
   let wrapper
@@ -10,7 +21,6 @@ describe('JobSearchForm', () => {
     wrapper = mount(JobSearchForm, {
       global: {
         stubs: ['fa-icon'],
-        plugins: [router],
       },
     })
   }
@@ -21,18 +31,24 @@ describe('JobSearchForm', () => {
 
   afterEach(() => {
     vi.useRealTimers()
+    vi.resetAllMocks()
     wrapper.unmount()
   })
 
   it('directs user to job results page with users search parameters', async () => {
-    const spy = vi.spyOn(router, 'push')
-
     createComponent()
 
-    const roleTextInputComponent = findComponentByPropValue(wrapper, 'TextInput', 'id', 'role')
-    const locationTextInputComponent = findComponentByPropValue(
+    const roleTextInputComponent = findComponentByPropertyValue(
       wrapper,
       'TextInput',
+      'props',
+      'id',
+      'role',
+    )
+    const locationTextInputComponent = findComponentByPropertyValue(
+      wrapper,
+      'TextInput',
+      'props',
       'id',
       'location',
     )
@@ -48,7 +64,7 @@ describe('JobSearchForm', () => {
     vi.runAllTimers()
     await flushPromises()
 
-    expect(spy).toHaveBeenCalledWith({
+    expect(push).toHaveBeenCalledWith({
       name: 'job-results',
       query: { role: enteredRoleValue, location: enteredLocationValue },
     })

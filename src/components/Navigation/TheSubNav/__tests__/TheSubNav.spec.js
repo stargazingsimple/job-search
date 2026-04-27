@@ -18,6 +18,7 @@ describe('TheSubNav', () => {
   }
 
   afterEach(() => {
+    vi.resetAllMocks()
     wrapper.unmount()
   })
 

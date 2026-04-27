@@ -16,7 +16,7 @@ describe('TheHeadline', () => {
 
   afterEach(() => {
     vi.useRealTimers()
-    vi.resetAllMocks()
+    vi.unstubAllGlobals()
     wrapper.unmount()
   })
 
@@ -29,11 +29,13 @@ describe('TheHeadline', () => {
   })
 
   it('changes action verb at a consistent interval', () => {
-    const spy = vi.spyOn(window, 'setInterval')
+    const mock = vi.fn()
+
+    vi.stubGlobal('setInterval', mock)
 
     createComponent()
 
-    expect(spy).toHaveBeenCalled()
+    expect(mock).toHaveBeenCalled()
   })
 
   it('swaps action verb after interval', async () => {
@@ -49,12 +51,14 @@ describe('TheHeadline', () => {
   })
 
   it('removes interval when component disappears', () => {
-    const spy = vi.spyOn(window, 'clearInterval')
+    const mock = vi.fn()
+
+    vi.stubGlobal('clearInterval', mock)
 
     createComponent()
 
     wrapper.unmount()
 
-    expect(spy).toHaveBeenCalled()
+    expect(mock).toHaveBeenCalled()
   })
 })

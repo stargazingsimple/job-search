@@ -1,7 +1,10 @@
 import { mount } from '@vue/test-utils'
-import { findElementByText } from '@/tests/utils.js'
-import router from '@/router/index.js'
+import { findComponentByPropertyValue } from '@/tests/utils.js'
 import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
+
+const mockRoute = {
+  name: 'job-results',
+}
 
 describe('MainNav', () => {
   let wrapper
@@ -9,13 +12,16 @@ describe('MainNav', () => {
   const createComponent = () => {
     wrapper = mount(MainNav, {
       global: {
-        stubs: ['fa-icon'],
-        plugins: [router],
+        stubs: ['fa-icon', 'router-link'],
+        mocks: {
+          $route: mockRoute,
+        },
       },
     })
   }
 
   afterEach(() => {
+    vi.resetAllMocks()
     wrapper.unmount()
   })
 
@@ -23,12 +29,18 @@ describe('MainNav', () => {
     text         | link
     ${'Careers'} | ${'/'}
     ${'Jobs'}    | ${'/job/results'}
-  `('should render $text link with $link href attribute', ({ text, link }) => {
+  `('should render router-link component with $link link', ({ link }) => {
     createComponent()
 
-    const linkElement = findElementByText(wrapper, 'a', text)
+    const routerLinkComponent = findComponentByPropertyValue(
+      wrapper,
+      'router-link',
+      'attributes',
+      'to',
+      link,
+    )
 
-    expect(linkElement.attributes('href')).toBe(link)
+    expect(routerLinkComponent.exists()).toBe(true)
   })
 
   it("should displays 'ProfileImage' component", async () => {
