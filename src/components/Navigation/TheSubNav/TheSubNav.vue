@@ -14,7 +14,9 @@ export default {
     <div class="flex h-full items-center px-8">
       <div v-if="onJobResultsPage">
         <fa-icon icon="search" class="mr-3" />
-        <span><span class="text-brand-green-1">1653</span> jobs matched</span>
+        <span>
+          <span class="text-brand-green-1" data-test="job-count">1653</span> jobs matched
+        </span>
       </div>
     </div>
   </div>

@@ -18,19 +18,23 @@ describe('TheSubNav', () => {
   }
 
   afterEach(() => {
-    vi.resetAllMocks()
+    vi.clearAllMocks()
     wrapper.unmount()
   })
 
   it('when user is on job results page', () => {
     createComponent()
 
-    expect(wrapper.html()).toContain('1653')
+    const jobCountElement = wrapper.find('[data-test="job-count"]')
+
+    expect(jobCountElement.text()).toBe('1653')
   })
 
   it('does NOT display job count', () => {
     createComponent('home')
 
-    expect(wrapper.html()).not.toContain('1653')
+    const jobCountElement = wrapper.find('[data-test="job-count"]')
+
+    expect(jobCountElement.exists()).toBe(false)
   })
 })

@@ -35,18 +35,30 @@ describe('JobListing', () => {
   `('renders job $propName', ({ propName }) => {
     createComponent()
 
-    expect(wrapper.html()).toContain(JOB_PROP[propName])
+    const element = wrapper.find(`[data-test=job-${propName}]`)
+
+    expect(element.text()).toBe(JOB_PROP[propName])
   })
 
   it.each(JOB_PROP.locations)("renders job location '%s'", (location) => {
     createComponent()
 
-    expect(wrapper.html()).toContain(location)
+    const jobLocationElements = wrapper.findAll('[data-test=job-location]')
+
+    expect(jobLocationElements.some((locationElement) => locationElement.text() === location)).toBe(
+      true,
+    )
   })
 
   it.each(JOB_PROP.minimumQualifications)("renders job qualification '%s'", (qualification) => {
     createComponent()
 
-    expect(wrapper.html()).toContain(qualification)
+    const jobQualificationElements = wrapper.findAll('[data-test=job-qualification]')
+
+    expect(
+      jobQualificationElements.some(
+        (qualificationElement) => qualificationElement.text() === qualification,
+      ),
+    ).toBe(true)
   })
 })

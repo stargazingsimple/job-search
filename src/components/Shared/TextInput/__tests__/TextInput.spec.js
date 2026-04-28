@@ -76,6 +76,6 @@ describe('TextInput', () => {
 
     await inputElement.setValue(enteredValue)
 
-    expect(wrapper.emitted('update:modelValue')[0][0]).toStrictEqual(enteredValue)
+    expect(wrapper.emitted('update:modelValue')[0][0]).toBe(enteredValue)
   })
 })

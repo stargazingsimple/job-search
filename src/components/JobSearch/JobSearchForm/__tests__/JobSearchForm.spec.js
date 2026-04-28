@@ -31,7 +31,7 @@ describe('JobSearchForm', () => {
 
   afterEach(() => {
     vi.useRealTimers()
-    vi.resetAllMocks()
+    vi.clearAllMocks()
     wrapper.unmount()
   })
 

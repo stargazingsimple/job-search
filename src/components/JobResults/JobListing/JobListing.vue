@@ -17,15 +17,15 @@ export default {
       class="border-brand-gray-2 hover:shadow-gray mx-auto block rounded border border-solid bg-white"
     >
       <div class="border-brand-gray-2 mx-8 border-b border-solid pt-5 pb-2">
-        <h2 class="mb-2 text-2xl">{{ job.title }}</h2>
+        <h2 class="mb-2 text-2xl" data-test="job-title">{{ job.title }}</h2>
         <div class="flex flex-row align-middle">
           <div class="mr-5">
-            <span>{{ job.organization }}</span>
+            <span data-test="job-organization">{{ job.organization }}</span>
           </div>
           <div>
             <ul>
               <li v-for="location in job.locations" :key="location" class="mr-5 inline-block">
-                <span>{{ location }}</span>
+                <span data-test="job-location">{{ location }}</span>
               </li>
             </ul>
           </div>
@@ -36,7 +36,11 @@ export default {
           <h3 class="mt-1 mb-2">Qualifications</h3>
           <div>
             <ul class="list-disc pl-8">
-              <li v-for="qualification in job.minimumQualifications" :key="qualification">
+              <li
+                v-for="qualification in job.minimumQualifications"
+                :key="qualification"
+                data-test="job-qualification"
+              >
                 {{ qualification }}
               </li>
             </ul>

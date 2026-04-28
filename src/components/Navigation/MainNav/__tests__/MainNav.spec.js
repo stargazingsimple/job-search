@@ -2,10 +2,6 @@ import { mount } from '@vue/test-utils'
 import { findComponentByPropertyValue } from '@/tests/utils.js'
 import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
 
-const mockRoute = {
-  name: 'job-results',
-}
-
 describe('MainNav', () => {
   let wrapper
 
@@ -14,14 +10,16 @@ describe('MainNav', () => {
       global: {
         stubs: ['fa-icon', 'router-link'],
         mocks: {
-          $route: mockRoute,
+          $route: {
+            name: 'job-results',
+          },
         },
       },
     })
   }
 
   afterEach(() => {
-    vi.resetAllMocks()
+    vi.clearAllMocks()
     wrapper.unmount()
   })
 
