@@ -29,6 +29,7 @@ describe('MainNav', () => {
     text         | link
     ${'Careers'} | ${'/'}
     ${'Jobs'}    | ${'/job/results'}
+    ${'Teams'}   | ${'/teams'}
   `('should render router-link component with $link link', ({ link }) => {
     createComponent()
 

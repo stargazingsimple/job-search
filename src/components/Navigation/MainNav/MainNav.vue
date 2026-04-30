@@ -19,6 +19,10 @@ export default {
           title: 'Jobs',
           link: '/job/results',
         },
+        {
+          title: 'Teams',
+          link: '/teams',
+        },
       ],
     }
   },
