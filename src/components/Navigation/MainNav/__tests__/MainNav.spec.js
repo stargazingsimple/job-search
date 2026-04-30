@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { findComponentByPropertyValue } from '@/tests/utils.js'
+import { createTestingPinia } from '@pinia/testing'
 import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
 
 describe('MainNav', () => {
@@ -8,6 +9,7 @@ describe('MainNav', () => {
   const createComponent = () => {
     wrapper = mount(MainNav, {
       global: {
+        plugins: [createTestingPinia({ stubActions: false })],
         stubs: ['fa-icon', 'router-link'],
         mocks: {
           $route: {

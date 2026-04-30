@@ -7,7 +7,7 @@ describe('App', () => {
   const createComponent = () => {
     wrapper = mount(App, {
       global: {
-        stubs: ['fa-icon', 'router-link', 'router-view'],
+        stubs: ['fa-icon', 'router-link', 'router-view', 'main-nav'],
       },
     })
   }

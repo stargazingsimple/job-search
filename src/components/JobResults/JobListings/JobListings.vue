@@ -1,16 +1,27 @@
 <script>
-import { getJobs } from '@/api/jobs.js'
+import { mapActions, mapState } from 'pinia'
+import { useJobsStore, FETCH_JOBS } from '@/store/modules/jobs/jobs'
 import JobListing from '@/components/JobResults/JobListing/JobListing.vue'
 
 export default {
   name: 'JobListings',
   components: { JobListing },
-  data() {
-    return {
-      jobs: [],
-    }
-  },
   computed: {
+    ...mapState(useJobsStore, {
+      jobs: 'jobs',
+      nextPage() {
+        const nextPage = this.currentPage + 1
+        const maxPage = Math.ceil(this.jobs.length / 10)
+
+        return nextPage <= maxPage ? nextPage : undefined
+      },
+      displayedJobs() {
+        const firstJobIndex = (this.currentPage - 1) * 10
+        const lastJobIndex = this.currentPage * 10
+
+        return this.jobs.slice(firstJobIndex, lastJobIndex)
+      },
+    }),
     currentPage() {
       return Number.parseInt(this.$route.query.page || '1')
     },
@@ -19,23 +30,12 @@ export default {
 
       return previousPage >= 1 ? previousPage : undefined
     },
-    nextPage() {
-      const nextPage = this.currentPage + 1
-      const maxPage = Math.ceil(this.jobs.length / 10)
-
-      return nextPage <= maxPage ? nextPage : undefined
-    },
-    displayedJobs() {
-      const firstJobIndex = (this.currentPage - 1) * 10
-      const lastJobIndex = this.currentPage * 10
-
-      return this.jobs.slice(firstJobIndex, lastJobIndex)
-    },
   },
-  async mounted() {
-    const { data } = await getJobs()
-
-    this.jobs = data
+  mounted() {
+    this.FETCH_JOBS()
+  },
+  methods: {
+    ...mapActions(useJobsStore, [FETCH_JOBS]),
   },
 }
 </script>

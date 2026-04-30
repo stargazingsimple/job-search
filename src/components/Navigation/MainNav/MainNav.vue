@@ -1,4 +1,6 @@
 <script>
+import { mapState, mapActions } from 'pinia'
+import { useUserStore, LOGIN_USER } from '@/store/modules/user/user'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import ProfileImage from '@/components/Navigation/ProfileImage/ProfileImage.vue'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
@@ -18,18 +20,16 @@ export default {
           link: '/job/results',
         },
       ],
-      isLoggedIn: false,
     }
   },
   computed: {
+    ...mapState(useUserStore, ['isLoggedIn']),
     headerHeightClass() {
       return this.isLoggedIn ? 'h-32' : 'h-16'
     },
   },
   methods: {
-    loginUser() {
-      this.isLoggedIn = true
-    },
+    ...mapActions(useUserStore, [LOGIN_USER]),
   },
 }
 </script>
@@ -50,7 +50,7 @@ export default {
         </nav>
         <div class="ml-auto flex h-full items-center">
           <profile-image v-if="isLoggedIn" />
-          <base-button v-else text="Sign in" @click="loginUser" />
+          <base-button v-else text="Sign in" @click="LOGIN_USER" />
         </div>
       </div>
       <the-sub-nav v-if="isLoggedIn" />

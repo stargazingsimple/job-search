@@ -1,14 +1,8 @@
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 import { findElementByText } from '@/tests/utils.js'
+import { createTestingPinia } from '@pinia/testing'
+import { useJobsStore } from '@/store/modules/jobs/jobs'
 import JobListings from '@/components/JobResults/JobListings/JobListings.vue'
-
-const { getJobs } = vi.hoisted(() => ({
-  getJobs: vi.fn(),
-}))
-
-vi.mock(import('@/api/jobs.js'), () => ({
-  getJobs: getJobs.mockResolvedValue({ data: {} }),
-}))
 
 describe('JobListings', () => {
   let wrapper
@@ -16,6 +10,7 @@ describe('JobListings', () => {
   const createComponent = (queryParams = {}) => {
     wrapper = mount(JobListings, {
       global: {
+        plugins: [createTestingPinia({ stubActions: false })],
         stubs: {
           RouterLink: RouterLinkStub,
         },
@@ -39,13 +34,17 @@ describe('JobListings', () => {
   it('fetches jobs', () => {
     createComponent()
 
-    expect(getJobs).toHaveBeenCalled()
+    const jobsStore = useJobsStore()
+
+    expect(jobsStore.FETCH_JOBS).toHaveBeenCalled()
   })
 
   it('displays maximum of 10 jobs', async () => {
-    getJobs.mockResolvedValue({ data: Array(15).fill({}) })
-
     createComponent()
+
+    const jobsStore = useJobsStore()
+
+    jobsStore.jobs = Array(15).fill({})
 
     await flushPromises()
 
@@ -75,11 +74,13 @@ describe('JobListings', () => {
     ${undefined} | ${'Next'}
     ${2}         | ${'Previous'}
   `('shows link to $linkText page', async ({ pageValue, linkText }) => {
-    getJobs.mockResolvedValue({ data: Array(15).fill({}) })
-
     createComponent({
       page: pageValue,
     })
+
+    const jobsStore = useJobsStore()
+
+    jobsStore.jobs = Array(15).fill({})
 
     await flushPromises()
 
@@ -93,11 +94,13 @@ describe('JobListings', () => {
     ${undefined} | ${'Previous'}
     ${2}         | ${'Next'}
   `('does not show link to $linkText page', async ({ pageValue, linkText }) => {
-    getJobs.mockResolvedValue({ data: Array(15).fill({}) })
-
     createComponent({
       page: pageValue,
     })
+
+    const jobsStore = useJobsStore()
+
+    jobsStore.jobs = Array(15).fill({})
 
     await flushPromises()
 
