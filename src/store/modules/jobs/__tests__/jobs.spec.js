@@ -1,4 +1,5 @@
 import { createPinia, setActivePinia } from 'pinia'
+import { useUserStore } from '../../user/user'
 import { useJobsStore } from '../jobs'
 
 const { getJobs } = vi.hoisted(() => ({
@@ -40,5 +41,54 @@ describe('jobs store module', () => {
         expect(store.jobs).toStrictEqual(MOCK_RESOLVED_DATA)
       })
     })
+  })
+
+  describe('getters', () => {
+    it('finds unique organizations from list of jobs', () => {
+      store.jobs = [
+        {
+          organization: 'Google',
+        },
+        {
+          organization: 'Amazon',
+        },
+        {
+          organization: 'Google',
+        },
+      ]
+
+      const result = store.UNIQUE_ORGANIZATIONS
+
+      expect(result).toEqual(new Set(['Google', 'Amazon']))
+    })
+
+    it.each`
+      selectedOrganizations      | expectedResult
+      ${['Google', 'Microsoft']} | ${[{ organization: 'Google' }, { organization: 'Microsoft' }]}
+      ${[]}                      | ${[{ organization: 'Google' }, { organization: 'Amazon' }, { organization: 'Microsoft' }]}
+    `(
+      'identifies jobs that are associated with the given organizations $selectedOrganizations',
+      ({ selectedOrganizations, expectedResult }) => {
+        store.jobs = [
+          {
+            organization: 'Google',
+          },
+          {
+            organization: 'Amazon',
+          },
+          {
+            organization: 'Microsoft',
+          },
+        ]
+
+        const userStore = useUserStore()
+
+        userStore.selectedOrganizations = selectedOrganizations
+
+        const result = store.FILTERED_JOBS_BY_ORGANIZATION
+
+        expect(result).toStrictEqual(expectedResult)
+      },
+    )
   })
 })

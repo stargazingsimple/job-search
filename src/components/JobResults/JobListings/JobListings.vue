@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from 'pinia'
-import { useJobsStore, FETCH_JOBS } from '@/store/modules/jobs/jobs'
+import { useJobsStore, FETCH_JOBS, FILTERED_JOBS_BY_ORGANIZATION } from '@/store/modules/jobs/jobs'
 import JobListing from '@/components/JobResults/JobListing/JobListing.vue'
 
 export default {
@@ -8,10 +8,10 @@ export default {
   components: { JobListing },
   computed: {
     ...mapState(useJobsStore, {
-      jobs: 'jobs',
+      FILTERED_JOBS_BY_ORGANIZATION,
       nextPage() {
         const nextPage = this.currentPage + 1
-        const maxPage = Math.ceil(this.jobs.length / 10)
+        const maxPage = Math.ceil(this.FILTERED_JOBS_BY_ORGANIZATION.length / 10)
 
         return nextPage <= maxPage ? nextPage : undefined
       },
@@ -19,7 +19,7 @@ export default {
         const firstJobIndex = (this.currentPage - 1) * 10
         const lastJobIndex = this.currentPage * 10
 
-        return this.jobs.slice(firstJobIndex, lastJobIndex)
+        return this.FILTERED_JOBS_BY_ORGANIZATION.slice(firstJobIndex, lastJobIndex)
       },
     }),
     currentPage() {
@@ -42,7 +42,7 @@ export default {
 
 <template>
   <main class="bg-brand-gray-2 flex-auto p-8">
-    <ol v-if="jobs.length">
+    <ol>
       <job-listing v-for="job in displayedJobs" :key="job.id" :job="job" />
     </ol>
     <div class="mx-auto mt-8">

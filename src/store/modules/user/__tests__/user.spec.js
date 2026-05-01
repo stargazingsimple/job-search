@@ -13,6 +13,10 @@ describe('user store module', () => {
     it('keeps track of if user is logged in', () => {
       expect(store.isLoggedIn).toBe(false)
     })
+
+    it('stores organizations that the user would like to filter jobs by', () => {
+      expect(store.selectedOrganizations).toEqual([])
+    })
   })
 
   describe('actions', () => {
@@ -23,6 +27,14 @@ describe('user store module', () => {
 
       it('logs the user in', () => {
         expect(store.isLoggedIn).toBe(true)
+      })
+    })
+
+    describe('ADD_SELECTED_ORGANIZATIONS', () => {
+      it('updates organizations the user has chosen to filter jobs by', () => {
+        store.ADD_SELECTED_ORGANIZATIONS(['Org1', 'Org2'])
+
+        expect(store.selectedOrganizations).toStrictEqual(['Org1', 'Org2'])
       })
     })
   })
