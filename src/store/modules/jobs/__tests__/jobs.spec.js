@@ -90,5 +90,52 @@ describe('jobs store module', () => {
         expect(result).toStrictEqual(expectedResult)
       },
     )
+
+    it('finds unique job types from list of jobs', () => {
+      store.jobs = [
+        {
+          jobType: 'Full-time',
+        },
+        {
+          jobType: 'Temporary',
+        },
+        {
+          jobType: 'Full-time',
+        },
+      ]
+
+      const result = store.UNIQUE_JOB_TYPES
+
+      expect(result).toEqual(new Set(['Full-time', 'Temporary']))
+    })
+
+    it.each`
+      selectedJobTypes              | expectedResult
+      ${['Full-time', 'Temporary']} | ${[{ jobType: 'Full-time' }, { jobType: 'Temporary' }]}
+      ${[]}                         | ${[{ jobType: 'Full-time' }, { jobType: 'Temporary' }, { jobType: 'Part-time' }]}
+    `(
+      'identifies jobs that are associated with the given job types $selectedJobTypes',
+      ({ selectedJobTypes, expectedResult }) => {
+        store.jobs = [
+          {
+            jobType: 'Full-time',
+          },
+          {
+            jobType: 'Temporary',
+          },
+          {
+            jobType: 'Part-time',
+          },
+        ]
+
+        const userStore = useUserStore()
+
+        userStore.selectedJobTypes = selectedJobTypes
+
+        const result = store.FILTERED_JOBS_BY_JOB_TYPES
+
+        expect(result).toStrictEqual(expectedResult)
+      },
+    )
   })
 })
