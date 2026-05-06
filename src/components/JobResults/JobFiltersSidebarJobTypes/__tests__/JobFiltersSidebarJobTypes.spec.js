@@ -4,16 +4,27 @@ import { useUserStore } from '@/store/modules/user/user'
 import { createTestingPinia } from '@pinia/testing'
 import JobFiltersSidebarJobTypes from '../JobFiltersSidebarJobTypes.vue'
 
+const router = {
+  push: vi.fn(),
+}
+
 describe('JobFiltersSidebarJobTypes', () => {
   let wrapper
 
   const createComponent = () => {
     wrapper = mount(JobFiltersSidebarJobTypes, {
-      global: { stubs: ['fa-icon'], plugins: [createTestingPinia({ stubActions: false })] },
+      global: {
+        stubs: ['fa-icon'],
+        plugins: [createTestingPinia({ stubActions: false })],
+        mocks: {
+          $router: router,
+        },
+      },
     })
   }
 
   afterEach(() => {
+    vi.clearAllMocks()
     wrapper.unmount()
   })
 
@@ -59,4 +70,22 @@ describe('JobFiltersSidebarJobTypes', () => {
       expect(userStore.ADD_SELECTED_JOB_TYPES).toHaveBeenCalledWith([selectedJobType])
     },
   )
+
+  it('navigates user to job results page to see fresh batch of filtered jobs', async () => {
+    createComponent()
+
+    const jobStore = useJobsStore()
+
+    jobStore.UNIQUE_JOB_TYPES = new Set(['Full-time', 'Part-time'])
+
+    const headerElement = wrapper.find('[data-test="header"]')
+
+    await headerElement.trigger('click')
+
+    const checkboxElement = wrapper.find(`#Full-time`)
+
+    await checkboxElement.setValue()
+
+    expect(router.push).toHaveBeenCalledWith({ name: 'job-results' })
+  })
 })

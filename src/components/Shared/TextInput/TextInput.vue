@@ -29,7 +29,7 @@ export default {
 
 <template>
   <div class="relative flex h-full flex-1 items-center">
-    <label :for="id" class="absolute -top-10 left-0">{{ label }}</label>
+    <label :for="id" class="absolute -top-10 left-0 -z-10">{{ label }}</label>
     <input
       :id="id"
       :value="modelValue"

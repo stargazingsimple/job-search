@@ -1,11 +1,11 @@
 <script>
 import { mapState } from 'pinia'
-import { FILTERED_JOBS_BY_ORGANIZATION, useJobsStore } from '@/store/modules/jobs/jobs'
+import { FILTERED_JOBS, useJobsStore } from '@/store/modules/jobs/jobs'
 
 export default {
   name: 'TheSubNav',
   computed: {
-    ...mapState(useJobsStore, [FILTERED_JOBS_BY_ORGANIZATION]),
+    ...mapState(useJobsStore, [FILTERED_JOBS]),
     onJobResultsPage() {
       return this.$route.name === 'job-results'
     },
@@ -20,7 +20,7 @@ export default {
         <fa-icon icon="search" class="mr-3" />
         <span>
           <span class="text-brand-green-1" data-test="job-count">
-            {{ FILTERED_JOBS_BY_ORGANIZATION.length }}
+            {{ FILTERED_JOBS.length }}
           </span>
           jobs matched
         </span>

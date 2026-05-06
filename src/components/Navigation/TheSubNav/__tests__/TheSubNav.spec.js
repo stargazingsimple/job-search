@@ -33,7 +33,7 @@ describe('TheSubNav', () => {
     const jobsStore = useJobsStore()
     const numberOfJobs = 16
 
-    jobsStore.FILTERED_JOBS_BY_ORGANIZATION = Array(numberOfJobs).fill({})
+    jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
 
     await nextTick()
 
@@ -47,7 +47,7 @@ describe('TheSubNav', () => {
     const jobsStore = useJobsStore()
     const numberOfJobs = 16
 
-    jobsStore.FILTERED_JOBS_BY_ORGANIZATION = Array(numberOfJobs).fill({})
+    jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
 
     await nextTick()
 

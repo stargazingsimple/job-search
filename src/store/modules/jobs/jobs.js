@@ -4,9 +4,10 @@ import { useUserStore } from '../user/user'
 
 export const FETCH_JOBS = 'FETCH_JOBS'
 export const UNIQUE_ORGANIZATIONS = 'UNIQUE_ORGANIZATIONS'
-export const FILTERED_JOBS_BY_ORGANIZATION = 'FILTERED_JOBS_BY_ORGANIZATION'
 export const UNIQUE_JOB_TYPES = 'UNIQUE_JOB_TYPES'
-export const FILTERED_JOBS_BY_JOB_TYPES = 'FILTERED_JOBS_BY_JOB_TYPES'
+export const FILTERED_JOBS = 'FILTERED_JOBS'
+export const INCLUDE_JOB_BY_ORGANIZATION = 'INCLUDE_JOB_BY_ORGANIZATION'
+export const INCLUDE_JOB_BY_JOB_TYPE = 'INCLUDE_JOB_BY_JOB_TYPE'
 
 export const useJobsStore = defineStore('jobs', {
   state() {
@@ -31,15 +32,6 @@ export const useJobsStore = defineStore('jobs', {
 
       return uniqueOrganizations
     },
-    [FILTERED_JOBS_BY_ORGANIZATION](state) {
-      const userStore = useUserStore()
-
-      return userStore.selectedOrganizations.length
-        ? state.jobs.filter(({ organization }) =>
-            userStore.selectedOrganizations.includes(organization),
-          )
-        : state.jobs
-    },
     [UNIQUE_JOB_TYPES](state) {
       const uniqueJobTypes = new Set()
 
@@ -49,12 +41,23 @@ export const useJobsStore = defineStore('jobs', {
 
       return uniqueJobTypes
     },
-    [FILTERED_JOBS_BY_JOB_TYPES](state) {
+    [INCLUDE_JOB_BY_ORGANIZATION]: () => (organization) => {
       const userStore = useUserStore()
 
-      return userStore.selectedJobTypes.length
-        ? state.jobs.filter(({ jobType }) => userStore.selectedJobTypes.includes(jobType))
-        : state.jobs
+      return (
+        userStore.selectedOrganizations.length === 0 ||
+        userStore.selectedOrganizations.includes(organization)
+      )
+    },
+    [INCLUDE_JOB_BY_JOB_TYPE]: () => (jobType) => {
+      const userStore = useUserStore()
+
+      return userStore.selectedJobTypes.length === 0 || userStore.selectedJobTypes.includes(jobType)
+    },
+    [FILTERED_JOBS](state) {
+      return state.jobs
+        .filter(({ organization }) => this.INCLUDE_JOB_BY_ORGANIZATION(organization))
+        .filter(({ jobType }) => this.INCLUDE_JOB_BY_JOB_TYPE(jobType))
     },
   },
 })

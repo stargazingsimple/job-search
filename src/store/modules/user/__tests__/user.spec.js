@@ -15,11 +15,11 @@ describe('user store module', () => {
     })
 
     it('stores organizations that the user would like to filter jobs by', () => {
-      expect(store.selectedOrganizations).toEqual([])
+      expect(store.selectedOrganizations).toStrictEqual([])
     })
 
     it('stores job types that the user would like to filter jobs by', () => {
-      expect(store.selectedJobTypes).toEqual([])
+      expect(store.selectedJobTypes).toStrictEqual([])
     })
   })
 

@@ -1,10 +1,11 @@
 <script>
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import JobFiltersSidebarOrganizations from '../JobFiltersSidebarOrganizations/JobFiltersSidebarOrganizations.vue'
+import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebarJobTypes/JobFiltersSidebarJobTypes.vue'
 
 export default {
   name: 'JobFiltersSidebar',
-  components: { BaseButton, JobFiltersSidebarOrganizations },
+  components: { JobFiltersSidebarJobTypes, BaseButton, JobFiltersSidebarOrganizations },
 }
 </script>
 
@@ -17,6 +18,7 @@ export default {
           <base-button text="Clear Filters" type="secondary" />
         </div>
       </div>
+      <job-filters-sidebar-job-types />
       <job-filters-sidebar-organizations />
     </section>
   </div>

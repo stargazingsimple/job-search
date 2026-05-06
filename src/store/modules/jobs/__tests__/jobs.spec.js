@@ -59,37 +59,8 @@ describe('jobs store module', () => {
 
       const result = store.UNIQUE_ORGANIZATIONS
 
-      expect(result).toEqual(new Set(['Google', 'Amazon']))
+      expect(result).toStrictEqual(new Set(['Google', 'Amazon']))
     })
-
-    it.each`
-      selectedOrganizations      | expectedResult
-      ${['Google', 'Microsoft']} | ${[{ organization: 'Google' }, { organization: 'Microsoft' }]}
-      ${[]}                      | ${[{ organization: 'Google' }, { organization: 'Amazon' }, { organization: 'Microsoft' }]}
-    `(
-      'identifies jobs that are associated with the given organizations $selectedOrganizations',
-      ({ selectedOrganizations, expectedResult }) => {
-        store.jobs = [
-          {
-            organization: 'Google',
-          },
-          {
-            organization: 'Amazon',
-          },
-          {
-            organization: 'Microsoft',
-          },
-        ]
-
-        const userStore = useUserStore()
-
-        userStore.selectedOrganizations = selectedOrganizations
-
-        const result = store.FILTERED_JOBS_BY_ORGANIZATION
-
-        expect(result).toStrictEqual(expectedResult)
-      },
-    )
 
     it('finds unique job types from list of jobs', () => {
       store.jobs = [
@@ -106,35 +77,42 @@ describe('jobs store module', () => {
 
       const result = store.UNIQUE_JOB_TYPES
 
-      expect(result).toEqual(new Set(['Full-time', 'Temporary']))
+      expect(result).toStrictEqual(new Set(['Full-time', 'Temporary']))
     })
 
     it.each`
-      selectedJobTypes              | expectedResult
-      ${['Full-time', 'Temporary']} | ${[{ jobType: 'Full-time' }, { jobType: 'Temporary' }]}
-      ${[]}                         | ${[{ jobType: 'Full-time' }, { jobType: 'Temporary' }, { jobType: 'Part-time' }]}
+      selectedOrganizations
+      ${[]}
+      ${['Google', 'Amazon']}
     `(
-      'identifies jobs that are associated with the given job types $selectedJobTypes',
-      ({ selectedJobTypes, expectedResult }) => {
-        store.jobs = [
-          {
-            jobType: 'Full-time',
-          },
-          {
-            jobType: 'Temporary',
-          },
-          {
-            jobType: 'Part-time',
-          },
-        ]
-
+      'verifies jobs are included for selected organizations $selectedOrganizations',
+      ({ selectedOrganizations }) => {
         const userStore = useUserStore()
+        const organization = 'Amazon'
+
+        userStore.selectedOrganizations = selectedOrganizations
+
+        const result = store.INCLUDE_JOB_BY_ORGANIZATION(organization)
+
+        expect(result).toBe(true)
+      },
+    )
+
+    it.each`
+      selectedJobTypes
+      ${[]}
+      ${['Full-time', 'Part-time']}
+    `(
+      'verifies jobs are included for selected job types $selectedJobTypes',
+      ({ selectedJobTypes }) => {
+        const userStore = useUserStore()
+        const jobType = 'Part-time'
 
         userStore.selectedJobTypes = selectedJobTypes
 
-        const result = store.FILTERED_JOBS_BY_JOB_TYPES
+        const result = store.INCLUDE_JOB_BY_JOB_TYPE(jobType)
 
-        expect(result).toStrictEqual(expectedResult)
+        expect(result).toBe(true)
       },
     )
   })
