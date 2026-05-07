@@ -1,20 +1,17 @@
-<script>
-export default {
-  name: 'BaseButton',
-  props: {
-    text: {
-      type: String,
-      default: 'Click me!',
-    },
-    type: {
-      type: String,
-      default: 'primary',
-      validator(value) {
-        return ['primary', 'secondary'].includes(value)
-      },
+<script setup>
+defineProps({
+  text: {
+    type: String,
+    default: 'Click me!',
+  },
+  type: {
+    type: String,
+    default: 'primary',
+    validator(value) {
+      return ['primary', 'secondary'].includes(value)
     },
   },
-}
+})
 </script>
 
 <template>

@@ -1,27 +1,19 @@
-<script>
-export default {
-  name: 'CollapsibleAccordion',
-  props: {
-    header: {
-      type: String,
-      required: true,
-    },
+<script setup>
+import { computed, ref } from 'vue'
+
+defineProps({
+  header: {
+    type: String,
+    required: true,
   },
-  data() {
-    return {
-      isOpen: false,
-    }
-  },
-  computed: {
-    caretIcon() {
-      return this.isOpen ? 'angle-up' : 'angle-down'
-    },
-  },
-  methods: {
-    toggleOpen() {
-      this.isOpen = !this.isOpen
-    },
-  },
+})
+
+const isOpen = ref(false)
+
+const caretIcon = computed(() => (isOpen.value ? 'angle-up' : 'angle-down'))
+
+const toggleOpen = () => {
+  isOpen.value = !isOpen.value
 }
 </script>
 
