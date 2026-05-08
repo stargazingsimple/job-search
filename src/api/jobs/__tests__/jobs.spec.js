@@ -4,7 +4,7 @@ const { get } = vi.hoisted(() => ({
   get: vi.fn(),
 }))
 
-vi.mock(import('@/api/index.js'), () => ({
+vi.mock('@/api/index.js', () => ({
   HTTP: {
     get,
   },

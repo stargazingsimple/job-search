@@ -9,7 +9,7 @@ import TextInput from '@/components/Shared/TextInput/TextInput.vue'
 
 const fields = reactive({})
 
-const { push } = useRouter()
+const router = useRouter()
 const { validate, values } = useForm({ validationSchema })
 
 entity.forEach(({ fieldName, initialValue }) => {
@@ -26,7 +26,7 @@ const handleSubmit = async () => {
   if (valid) {
     const { role, location } = values
 
-    push({ name: 'job-results', query: { role, location } })
+    router.push({ name: 'job-results', query: { role, location } })
   }
 }
 </script>

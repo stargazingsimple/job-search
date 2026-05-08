@@ -10,7 +10,7 @@ describe('MainNav', () => {
     wrapper = mount(MainNav, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
-        stubs: ['fa-icon', 'router-link'],
+        stubs: ['fa-icon', 'router-link', 'the-sub-nav'],
         mocks: {
           $route: {
             name: 'job-results',

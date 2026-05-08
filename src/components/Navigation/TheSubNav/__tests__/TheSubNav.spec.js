@@ -4,17 +4,24 @@ import { createTestingPinia } from '@pinia/testing'
 import { useJobsStore } from '@/store/modules/jobs/jobs'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
 
+const { route } = vi.hoisted(() => {
+  return {
+    route: { name: 'job-results' },
+  }
+})
+
+vi.mock('vue-router', () => {
+  return {
+    useRoute: vi.fn().mockReturnValue(route),
+  }
+})
+
 describe('TheSubNav', () => {
   let wrapper
 
-  const createComponent = (routeName = 'job-results') => {
+  const createComponent = () => {
     wrapper = mount(TheSubNav, {
       global: {
-        mocks: {
-          $route: {
-            name: routeName,
-          },
-        },
         stubs: ['fa-icon'],
         plugins: [createTestingPinia({ stubActions: false })],
       },
@@ -41,7 +48,9 @@ describe('TheSubNav', () => {
   })
 
   it('does NOT display job count', async () => {
-    createComponent('home')
+    route.name = 'home'
+
+    createComponent()
 
     const jobCountElement = wrapper.find('[data-test="job-count"]')
     const jobsStore = useJobsStore()

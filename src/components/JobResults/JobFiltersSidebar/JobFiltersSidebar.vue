@@ -1,12 +1,15 @@
-<script>
+<script setup>
+import { computed } from 'vue'
+import { useJobsStore } from '@/store/modules/jobs/jobs.js'
+import { useUserStore } from '@/store/modules/user/user.js'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
-import JobFiltersSidebarOrganizations from '../JobFiltersSidebarOrganizations/JobFiltersSidebarOrganizations.vue'
-import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebarJobTypes/JobFiltersSidebarJobTypes.vue'
+import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebarCheckboxGroup/JobFiltersSidebarCheckboxGroup.vue'
 
-export default {
-  name: 'JobFiltersSidebar',
-  components: { JobFiltersSidebarJobTypes, BaseButton, JobFiltersSidebarOrganizations },
-}
+const jobsStore = useJobsStore()
+const userStore = useUserStore()
+
+const UNIQUE_JOB_TYPES = computed(() => jobsStore.UNIQUE_JOB_TYPES)
+const UNIQUE_ORGANIZATIONS = computed(() => jobsStore.UNIQUE_ORGANIZATIONS)
 </script>
 
 <template>
@@ -18,8 +21,16 @@ export default {
           <base-button text="Clear Filters" type="secondary" />
         </div>
       </div>
-      <job-filters-sidebar-job-types />
-      <job-filters-sidebar-organizations />
+      <job-filters-sidebar-checkbox-group
+        :action="userStore.ADD_SELECTED_JOB_TYPES"
+        :unique-values="UNIQUE_JOB_TYPES"
+        header="Job Types"
+      />
+      <job-filters-sidebar-checkbox-group
+        :action="userStore.ADD_SELECTED_ORGANIZATIONS"
+        :unique-values="UNIQUE_ORGANIZATIONS"
+        header="Organizations"
+      />
     </section>
   </div>
 </template>

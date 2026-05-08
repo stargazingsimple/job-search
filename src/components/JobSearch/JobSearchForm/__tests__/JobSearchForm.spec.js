@@ -2,15 +2,15 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { findComponentByPropertyValue } from '@/tests/utils.js'
 import JobSearchForm from '@/components/JobSearch/JobSearchForm/JobSearchForm.vue'
 
-const { push } = vi.hoisted(() => {
+const { router } = vi.hoisted(() => {
   return {
-    push: vi.fn(),
+    router: { push: vi.fn() },
   }
 })
 
 vi.mock('vue-router', () => {
   return {
-    useRouter: vi.fn().mockReturnValue({ push }),
+    useRouter: vi.fn().mockReturnValue(router),
   }
 })
 
@@ -64,7 +64,7 @@ describe('JobSearchForm', () => {
     vi.runAllTimers()
     await flushPromises()
 
-    expect(push).toHaveBeenCalledWith({
+    expect(router.push).toHaveBeenCalledWith({
       name: 'job-results',
       query: { role: enteredRoleValue, location: enteredLocationValue },
     })
