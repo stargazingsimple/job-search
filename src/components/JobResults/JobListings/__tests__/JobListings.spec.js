@@ -4,27 +4,38 @@ import { createTestingPinia } from '@pinia/testing'
 import { useJobsStore } from '@/store/modules/jobs/jobs'
 import JobListings from '@/components/JobResults/JobListings/JobListings.vue'
 
-describe('JobListings', () => {
-  let wrapper
+const { route } = vi.hoisted(() => {
+  return {
+    route: {
+      query: {
+        page: '1',
+      },
+    },
+  }
+})
 
-  const createComponent = (queryParams = {}) => {
+vi.mock('vue-router', () => {
+  return {
+    useRoute: vi.fn().mockReturnValue(route),
+  }
+})
+
+describe('JobListings', () => {
+  let wrapper, jobsStore
+
+  const createComponent = () => {
     wrapper = mount(JobListings, {
       global: {
-        plugins: [createTestingPinia({ stubActions: false })],
         stubs: {
           RouterLink: RouterLinkStub,
-        },
-        mocks: {
-          $route: {
-            query: {
-              page: '1',
-              ...queryParams,
-            },
-          },
         },
       },
     })
   }
+
+  beforeEach(() => {
+    jobsStore = useJobsStore(createTestingPinia())
+  })
 
   afterEach(() => {
     vi.clearAllMocks()
@@ -34,17 +45,13 @@ describe('JobListings', () => {
   it('fetches jobs', () => {
     createComponent()
 
-    const jobsStore = useJobsStore()
-
     expect(jobsStore.FETCH_JOBS).toHaveBeenCalled()
   })
 
   it('displays maximum of 10 jobs', async () => {
     createComponent()
 
-    const jobsStore = useJobsStore()
-
-    jobsStore.jobs = Array(15).fill({})
+    jobsStore.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 
@@ -56,11 +63,11 @@ describe('JobListings', () => {
   it.each`
     pageValue    | text
     ${undefined} | ${'Page 1'}
-    ${3}         | ${'Page 3'}
+    ${'3'}       | ${'Page 3'}
   `('displays current page text $text', async ({ pageValue, text }) => {
-    createComponent({
-      page: pageValue,
-    })
+    route.query.page = pageValue
+
+    createComponent()
 
     await flushPromises()
 
@@ -72,15 +79,13 @@ describe('JobListings', () => {
   it.each`
     pageValue    | linkText
     ${undefined} | ${'Next'}
-    ${2}         | ${'Previous'}
+    ${'2'}       | ${'Previous'}
   `('shows link to $linkText page', async ({ pageValue, linkText }) => {
-    createComponent({
-      page: pageValue,
-    })
+    route.query.page = pageValue
 
-    const jobsStore = useJobsStore()
+    createComponent()
 
-    jobsStore.jobs = Array(15).fill({})
+    jobsStore.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 
@@ -92,15 +97,13 @@ describe('JobListings', () => {
   it.each`
     pageValue    | linkText
     ${undefined} | ${'Previous'}
-    ${2}         | ${'Next'}
+    ${'2'}       | ${'Next'}
   `('does not show link to $linkText page', async ({ pageValue, linkText }) => {
-    createComponent({
-      page: pageValue,
-    })
+    route.query.page = pageValue
 
-    const jobsStore = useJobsStore()
+    createComponent()
 
-    jobsStore.jobs = Array(15).fill({})
+    jobsStore.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 

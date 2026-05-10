@@ -1,43 +1,35 @@
-<script>
-import { mapActions, mapState } from 'pinia'
-import { useJobsStore, FETCH_JOBS, FILTERED_JOBS } from '@/store/modules/jobs/jobs'
+<script setup>
+import { computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useJobsStore } from '@/store/modules/jobs/jobs'
 import JobListing from '@/components/JobResults/JobListing/JobListing.vue'
 
-export default {
-  name: 'JobListings',
-  components: { JobListing },
-  computed: {
-    ...mapState(useJobsStore, {
-      FILTERED_JOBS,
-      nextPage() {
-        const nextPage = this.currentPage + 1
-        const maxPage = Math.ceil(this.FILTERED_JOBS.length / 10)
+const route = useRoute()
+const jobsStore = useJobsStore()
 
-        return nextPage <= maxPage ? nextPage : undefined
-      },
-      displayedJobs() {
-        const firstJobIndex = (this.currentPage - 1) * 10
-        const lastJobIndex = this.currentPage * 10
+const FILTERED_JOBS = computed(() => jobsStore.FILTERED_JOBS)
+const currentPage = computed(() => Number.parseInt(route.query.page || '1'))
+const nextPage = computed(() => {
+  const nextPage = currentPage.value + 1
+  const maxPage = Math.ceil(FILTERED_JOBS.value.length / 10)
 
-        return this.FILTERED_JOBS.slice(firstJobIndex, lastJobIndex)
-      },
-    }),
-    currentPage() {
-      return Number.parseInt(this.$route.query.page || '1')
-    },
-    previousPage() {
-      const previousPage = this.currentPage - 1
+  return nextPage <= maxPage ? nextPage : undefined
+})
+const displayedJobs = computed(() => {
+  const firstJobIndex = (currentPage.value - 1) * 10
+  const lastJobIndex = currentPage.value * 10
 
-      return previousPage >= 1 ? previousPage : undefined
-    },
-  },
-  mounted() {
-    this.FETCH_JOBS()
-  },
-  methods: {
-    ...mapActions(useJobsStore, [FETCH_JOBS]),
-  },
-}
+  return FILTERED_JOBS.value.slice(firstJobIndex, lastJobIndex)
+})
+const previousPage = computed(() => {
+  const previousPage = currentPage.value - 1
+
+  return previousPage >= 1 ? previousPage : undefined
+})
+
+onMounted(() => {
+  jobsStore.FETCH_JOBS()
+})
 </script>
 
 <template>

@@ -1,19 +1,14 @@
-<script>
+<script setup>
+import { onMounted, ref } from 'vue'
 import { getSpotlights } from '@/api/spotlights/spotlights'
 
-export default {
-  name: 'SpotlightsList',
-  data() {
-    return {
-      spotlights: [],
-    }
-  },
-  async mounted() {
-    const { data } = await getSpotlights()
+const spotlights = ref([])
 
-    this.spotlights = data
-  },
-}
+onMounted(async () => {
+  const { data } = await getSpotlights()
+
+  spotlights.value = data
+})
 </script>
 
 <template>
