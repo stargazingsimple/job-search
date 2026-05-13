@@ -1,13 +1,10 @@
-<script>
-export default {
-  name: 'JobListing',
-  props: {
-    job: {
-      type: Object,
-      required: true,
-    },
+<script setup>
+defineProps({
+  job: {
+    type: Object,
+    required: true,
   },
-}
+})
 </script>
 
 <template>
