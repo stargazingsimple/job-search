@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { getSpotlights } from '@/api/spotlights/spotlights'
+import { getSpotlights } from '@/api/spotlights/spotlights.ts'
 
 const spotlights = ref([])
 

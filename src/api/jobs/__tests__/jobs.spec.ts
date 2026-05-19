@@ -1,10 +1,10 @@
-import { getJobs } from '../jobs'
+import { getJobs } from '../jobs.ts'
 
 const { get } = vi.hoisted(() => ({
   get: vi.fn(),
 }))
 
-vi.mock('@/api/index.js', () => ({
+vi.mock('@/api/index.ts', () => ({
   HTTP: {
     get,
   },

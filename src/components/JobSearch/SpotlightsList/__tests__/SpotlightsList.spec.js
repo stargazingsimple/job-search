@@ -6,7 +6,7 @@ const { getSpotlights } = vi.hoisted(() => ({
   getSpotlights: vi.fn(),
 }))
 
-vi.mock('@/api/spotlights/spotlights.js', () => ({
+vi.mock('@/api/spotlights/spotlights.ts', () => ({
   getSpotlights: getSpotlights.mockResolvedValue({ data: [] }),
 }))
 

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getJobs } from '@/api/jobs/jobs'
+import { getJobs } from '@/api/jobs/jobs.ts'
 import { useUserStore } from '../user/user'
 
 export const FETCH_JOBS = 'FETCH_JOBS'
