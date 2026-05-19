@@ -1,6 +1,7 @@
-import { defineConfig, globalIgnores } from 'eslint/config'
+import { globalIgnores } from 'eslint/config'
 import { includeIgnoreFile } from '@eslint/compat'
 import { fileURLToPath } from 'node:url'
+import { defineConfigWithVueTs } from '@vue/eslint-config-typescript'
 import globals from 'globals'
 import js from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
@@ -9,7 +10,7 @@ import skipFormatting from 'eslint-config-prettier/flat'
 
 const gitIgnorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 
-export default defineConfig([
+export default defineConfigWithVueTs([
   includeIgnoreFile(gitIgnorePath, 'Imported .gitignore patterns'),
 
   {
@@ -29,6 +30,7 @@ export default defineConfig([
   },
 
   js.configs.recommended,
+  // vueTsConfigs.recommended,
   ...pluginVue.configs['flat/recommended'],
 
   {
