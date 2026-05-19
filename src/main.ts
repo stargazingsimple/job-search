@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import '@/styles/main.css'
-import router from '@/router'
+import router from '@/router/index'
 import store from '@/store'
 import FontAwesomeIcon from '@/plugins/font-awesome.js'
 import App from '@/App/App.vue'

@@ -30,6 +30,7 @@ export default defineConfigWithVueTs([
   },
 
   js.configs.recommended,
+  // Need to change
   // vueTsConfigs.recommended,
   ...pluginVue.configs['flat/recommended'],
 
