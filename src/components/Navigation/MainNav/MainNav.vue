@@ -1,6 +1,6 @@
 <script>
 import { mapState, mapActions } from 'pinia'
-import { useUserStore, LOGIN_USER } from '@/store/modules/user/user'
+import { useUserStore, LOGIN_USER } from '@/store/modules/user/user.ts'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import ProfileImage from '@/components/Navigation/ProfileImage/ProfileImage.vue'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'

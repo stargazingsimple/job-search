@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import { createTestingPinia } from '@pinia/testing'
-import { useJobsStore } from '@/store/modules/jobs/jobs'
+import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
 
 const { route } = vi.hoisted(() => {

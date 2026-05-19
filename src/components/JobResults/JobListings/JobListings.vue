@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useJobsStore } from '@/store/modules/jobs/jobs'
+import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
 import usePreviousAndNextPages from '@/composables/usePreviousAndNextPages/usePreviousAndNextPages.js'
 import JobListing from '@/components/JobResults/JobListing/JobListing.vue'
 

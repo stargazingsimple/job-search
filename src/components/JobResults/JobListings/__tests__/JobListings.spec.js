@@ -1,7 +1,7 @@
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 import { findElementByText } from '@/tests/utils.js'
 import { createTestingPinia } from '@pinia/testing'
-import { useJobsStore } from '@/store/modules/jobs/jobs'
+import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
 import JobListings from '@/components/JobResults/JobListings/JobListings.vue'
 
 const { route } = vi.hoisted(() => {

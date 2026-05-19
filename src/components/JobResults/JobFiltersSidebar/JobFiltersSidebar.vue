@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
-import { useJobsStore } from '@/store/modules/jobs/jobs.js'
-import { useUserStore } from '@/store/modules/user/user.js'
+import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
+import { useUserStore } from '@/store/modules/user/user.ts'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebarCheckboxGroup/JobFiltersSidebarCheckboxGroup.vue'
 

@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useJobsStore } from '@/store/modules/jobs/jobs'
+import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
 
 const route = useRoute()
 const jobsStore = useJobsStore()
