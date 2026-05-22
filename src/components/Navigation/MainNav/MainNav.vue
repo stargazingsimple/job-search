@@ -1,41 +1,25 @@
-<script>
-import { mapState, mapActions } from 'pinia'
-import { useUserStore, LOGIN_USER } from '@/store/modules/user/user.ts'
+<script setup lang="ts">
+import { computed } from 'vue'
+import { LOGIN_USER, useUserStore } from '@/store/modules/user/user.ts'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import ProfileImage from '@/components/Navigation/ProfileImage/ProfileImage.vue'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
 
-export default {
-  name: 'MainNav',
-  components: {
-    TheSubNav,
-    ProfileImage,
-    BaseButton,
+const NAV_ITEMS = [
+  {
+    title: 'Jobs',
+    link: '/job/results',
   },
-  data() {
-    return {
-      items: [
-        {
-          title: 'Jobs',
-          link: '/job/results',
-        },
-        {
-          title: 'Teams',
-          link: '/teams',
-        },
-      ],
-    }
+  {
+    title: 'Teams',
+    link: '/teams',
   },
-  computed: {
-    ...mapState(useUserStore, ['isLoggedIn']),
-    headerHeightClass() {
-      return this.isLoggedIn ? 'h-32' : 'h-16'
-    },
-  },
-  methods: {
-    ...mapActions(useUserStore, [LOGIN_USER]),
-  },
-}
+]
+
+const userStore = useUserStore()
+
+const isLoggedIn = computed(() => userStore.isLoggedIn)
+const headerHeightClass = computed(() => (isLoggedIn.value ? 'h-32' : 'h-16'))
 </script>
 
 <template>
@@ -45,7 +29,7 @@ export default {
         <router-link to="/" class="flex h-full items-center text-xl">Careers</router-link>
         <nav class="ml-12 h-full">
           <ul class="flex h-full list-none">
-            <li v-for="{ title, link } in items" :key="title" class="ml-9 h-full first:ml-0">
+            <li v-for="{ title, link } in NAV_ITEMS" :key="title" class="ml-9 h-full first:ml-0">
               <router-link :to="link" class="flex h-full items-center py-2.5">
                 {{ title }}
               </router-link>
@@ -54,7 +38,7 @@ export default {
         </nav>
         <div class="ml-auto flex h-full items-center">
           <profile-image v-if="isLoggedIn" />
-          <base-button v-else text="Sign in" @click="LOGIN_USER" />
+          <base-button v-else text="Sign in" @click="userStore[LOGIN_USER]" />
         </div>
       </div>
       <the-sub-nav v-if="isLoggedIn" />

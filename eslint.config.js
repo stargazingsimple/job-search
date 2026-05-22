@@ -1,7 +1,7 @@
 import { globalIgnores } from 'eslint/config'
 import { includeIgnoreFile } from '@eslint/compat'
 import { fileURLToPath } from 'node:url'
-import { defineConfigWithVueTs } from '@vue/eslint-config-typescript'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import globals from 'globals'
 import js from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
@@ -15,7 +15,7 @@ export default defineConfigWithVueTs([
 
   {
     name: 'app/files-to-lint',
-    files: ['**/*.{vue,js,mjs,jsx}'],
+    files: ['**/*.{vue,js,mjs,jsx,ts}'],
   },
 
   globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
@@ -30,8 +30,7 @@ export default defineConfigWithVueTs([
   },
 
   js.configs.recommended,
-  // Need to change
-  // vueTsConfigs.recommended,
+  vueTsConfigs.recommended,
   ...pluginVue.configs['flat/recommended'],
 
   {

@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import { useRouter } from 'vue-router'
-import entity from '@/utils/entities/job-search.js'
-import validationSchema from '@/utils/validation/schemas/job-search.js'
+import entity from '@/utils/entities/job-search'
+import validationSchema from '@/utils/validation/schemas/job-search'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import TextInput from '@/components/Shared/TextInput/TextInput.vue'
 

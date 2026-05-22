@@ -1,13 +1,8 @@
-<script>
+<script setup lang="ts">
 import TheHeadline from '@/components/JobSearch/TheHeadline/TheHeadline.vue'
 import JobSearchForm from '@/components/JobSearch/JobSearchForm/JobSearchForm.vue'
 import SpotlightsList from '../SpotlightsList/SpotlightsList.vue'
 import SpotlightsListItem from '../SpotlightsListItem/SpotlightsListItem.vue'
-
-export default {
-  name: 'TheHero',
-  components: { TheHeadline, JobSearchForm, SpotlightsList, SpotlightsListItem },
-}
 </script>
 
 <template>

@@ -1,35 +1,28 @@
-<script>
-export default {
-  name: 'TheHeadline',
-  data() {
-    return {
-      action: 'Build',
-      interval: null,
-    }
-  },
-  computed: {
-    actionClass() {
-      return this.action.toLowerCase()
-    },
-  },
-  created() {
-    this.changeTitle()
-  },
-  beforeUnmount() {
-    clearInterval(this.interval)
-  },
-  methods: {
-    changeTitle() {
-      this.interval = setInterval(() => {
-        const actions = ['Build', 'Create', 'Design', 'Code']
-        const currentActionIdx = actions.indexOf(this.action)
-        const nextActionIdx = (currentActionIdx + 1) % actions.length
+<script setup lang="ts">
+import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 
-        this.action = actions[nextActionIdx]
-      }, 3000)
-    },
-  },
+const action = ref('Build')
+const interval = ref(null)
+
+const actionClass = computed(() => action.value.toLowerCase())
+
+const changeTitle = () => {
+  interval.value = setInterval(() => {
+    const actions = ['Build', 'Create', 'Design', 'Code']
+    const currentActionIdx = actions.indexOf(action.value)
+    const nextActionIdx = (currentActionIdx + 1) % actions.length
+
+    action.value = actions[nextActionIdx]
+  }, 3000)
 }
+
+onBeforeMount(() => {
+  changeTitle()
+})
+
+onBeforeUnmount(() => {
+  clearInterval(interval.value)
+})
 </script>
 
 <template>

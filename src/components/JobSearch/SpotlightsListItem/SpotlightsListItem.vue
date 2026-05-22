@@ -1,21 +1,18 @@
-<script>
-export default {
-  name: 'SpotlightsListItem',
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    img: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
+<script setup lang="ts">
+defineProps({
+  title: {
+    type: String,
+    required: true,
   },
-}
+  img: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+})
 </script>
 
 <template>

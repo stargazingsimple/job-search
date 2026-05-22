@@ -1,11 +1,12 @@
-import { mount, type MountingOptions, type VueWrapper } from '@vue/test-utils'
+import type { SlotsType } from 'vue'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import { findElementByText } from '@/tests/utils.ts'
 import HeaderContainer from '../HeaderContainer.vue'
 
 describe('HeaderContainer', () => {
   let wrapper: VueWrapper<InstanceType<typeof HeaderContainer>>
 
-  const createComponent = (slots: MountingOptions<HeaderContainer>['slots']) => {
+  const createComponent = (slots: SlotsType) => {
     wrapper = mount(HeaderContainer, {
       slots,
     })

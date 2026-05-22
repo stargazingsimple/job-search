@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "vite.config.ts"],
   "exclude": [],
   "compilerOptions": {
     "composite": true,
@@ -8,6 +8,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "ignoreDeprecations": "6.0"
   }
 }

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
 import { useUserStore } from '@/store/modules/user/user.ts'

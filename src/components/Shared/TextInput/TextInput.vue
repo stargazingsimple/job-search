@@ -1,29 +1,31 @@
-<script>
-export default {
-  name: 'TextInput',
-  props: {
-    modelValue: {
-      type: String,
-      required: true,
-    },
-    id: {
-      type: String,
-      required: true,
-    },
-    placeholder: {
-      type: String,
-      required: true,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-    errorMessage: {
-      type: String,
-      default: undefined,
-    },
+<script setup lang="ts">
+defineProps({
+  modelValue: {
+    type: String,
+    required: true,
   },
-  emits: ['update:modelValue'],
+  id: {
+    type: String,
+    required: true,
+  },
+  placeholder: {
+    type: String,
+    required: true,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
+  errorMessage: {
+    type: String,
+    default: undefined,
+  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const onInput = (event: Event) => {
+  emit('update:modelValue', (event.target as HTMLInputElement).value)
 }
 </script>
 
@@ -38,7 +40,7 @@ export default {
       type="text"
       class="w-full text-lg font-normal focus:outline-none"
       autocomplete="off"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="onInput"
     />
     <span
       v-if="errorMessage"

@@ -1,10 +1,5 @@
-<script>
+<script setup lang="ts">
 import HeaderContainer from '@/components/Shared/HeaderContainer/HeaderContainer.vue'
-
-export default {
-  name: 'TeamsView',
-  components: { HeaderContainer },
-}
 </script>
 
 <template>
