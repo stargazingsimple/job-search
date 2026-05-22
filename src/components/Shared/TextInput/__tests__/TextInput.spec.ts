@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import TextInput from '@/components/Shared/TextInput/TextInput.vue'
 
 const MODEL_VALUE_PROP = 'Frontend'
@@ -8,7 +8,7 @@ const LABEL_PROP = 'Label'
 const ERROR_MESSAGE_PROP = 'Invalid value'
 
 describe('TextInput', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof TextInput>>
 
   const createComponent = () => {
     wrapper = mount(TextInput, {
@@ -76,6 +76,6 @@ describe('TextInput', () => {
 
     await inputElement.setValue(enteredValue)
 
-    expect(wrapper.emitted('update:modelValue')[0][0]).toBe(enteredValue)
+    expect(wrapper.emitted()['update:modelValue'][0]).toStrictEqual([enteredValue])
   })
 })

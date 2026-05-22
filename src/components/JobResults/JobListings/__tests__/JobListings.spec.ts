@@ -1,7 +1,8 @@
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
-import { findElementByText } from '@/tests/utils.js'
+import { flushPromises, mount, RouterLinkStub, type VueWrapper } from '@vue/test-utils'
+import { findElementByText } from '@/tests/utils.ts'
 import { createTestingPinia } from '@pinia/testing'
 import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
+import { mockedStore } from '@/tests/mocked-store.ts'
 import JobListings from '@/components/JobResults/JobListings/JobListings.vue'
 
 const { route } = vi.hoisted(() => {
@@ -21,7 +22,7 @@ vi.mock('vue-router', () => {
 })
 
 describe('JobListings', () => {
-  let wrapper, jobsStore
+  let wrapper: VueWrapper<InstanceType<typeof JobListings>>
 
   const createComponent = () => {
     wrapper = mount(JobListings, {
@@ -29,13 +30,10 @@ describe('JobListings', () => {
         stubs: {
           RouterLink: RouterLinkStub,
         },
+        plugins: [createTestingPinia({ stubActions: false })],
       },
     })
   }
-
-  beforeEach(() => {
-    jobsStore = useJobsStore(createTestingPinia())
-  })
 
   afterEach(() => {
     vi.clearAllMocks()
@@ -45,11 +43,15 @@ describe('JobListings', () => {
   it('fetches jobs', () => {
     createComponent()
 
+    const jobsStore = mockedStore(useJobsStore)
+
     expect(jobsStore.FETCH_JOBS).toHaveBeenCalled()
   })
 
   it('displays maximum of 10 jobs', async () => {
     createComponent()
+
+    const jobsStore = mockedStore(useJobsStore)
 
     jobsStore.FILTERED_JOBS = Array(15).fill({})
 
@@ -85,13 +87,15 @@ describe('JobListings', () => {
 
     createComponent()
 
+    const jobsStore = mockedStore(useJobsStore)
+
     jobsStore.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 
     const element = findElementByText(wrapper, 'a', linkText)
 
-    expect(element.exists()).toBe(true)
+    expect(element).toBeDefined()
   })
 
   it.each`
@@ -102,6 +106,8 @@ describe('JobListings', () => {
     route.query.page = pageValue
 
     createComponent()
+
+    const jobsStore = mockedStore(useJobsStore)
 
     jobsStore.FILTERED_JOBS = Array(15).fill({})
 

@@ -1,10 +1,10 @@
-import { mount } from '@vue/test-utils'
-import { findComponentByPropertyValue } from '@/tests/utils.js'
+import { mount, type VueWrapper } from '@vue/test-utils'
+import { findComponentByPropertyValue } from '@/tests/utils.ts'
 import { createTestingPinia } from '@pinia/testing'
 import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
 
 describe('MainNav', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof MainNav>>
 
   const createComponent = () => {
     wrapper = mount(MainNav, {
@@ -41,7 +41,7 @@ describe('MainNav', () => {
       link,
     )
 
-    expect(routerLinkComponent.exists()).toBe(true)
+    expect(routerLinkComponent).toBeDefined()
   })
 
   it("should displays 'ProfileImage' component", async () => {

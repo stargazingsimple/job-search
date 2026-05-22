@@ -1,5 +1,5 @@
-import { flushPromises, mount } from '@vue/test-utils'
-import { findElementByText } from '@/tests/utils'
+import { flushPromises, mount, type VueWrapper } from '@vue/test-utils'
+import { findElementByText } from '@/tests/utils.ts'
 import SpotlightsList from '../SpotlightsList.vue'
 
 const { getSpotlights } = vi.hoisted(() => ({
@@ -17,7 +17,7 @@ const MOCK_RESOLVED_DATA_ITEM = {
 }
 
 describe('SpotlightsList', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof SpotlightsList>>
 
   const createComponent = (defaultSlot = '') => {
     wrapper = mount(SpotlightsList, {
@@ -38,7 +38,7 @@ describe('SpotlightsList', () => {
     expect(getSpotlights).toHaveBeenCalled()
   })
 
-  it.each(Object.keys(MOCK_RESOLVED_DATA_ITEM))(
+  it.each(Object.keys(MOCK_RESOLVED_DATA_ITEM) as Array<keyof typeof MOCK_RESOLVED_DATA_ITEM>)(
     "provides '%s' property to parent component",
     async (property) => {
       getSpotlights.mockResolvedValue({ data: [MOCK_RESOLVED_DATA_ITEM] })
@@ -52,7 +52,7 @@ describe('SpotlightsList', () => {
 
       const element = findElementByText(wrapper, 'h1', MOCK_RESOLVED_DATA_ITEM[property])
 
-      expect(element.exists()).toBe(true)
+      expect(element).toBeDefined()
     },
   )
 })

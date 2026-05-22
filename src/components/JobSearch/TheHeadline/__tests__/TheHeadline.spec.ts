@@ -1,10 +1,10 @@
-import { mount } from '@vue/test-utils'
-import { findElementByText } from '@/tests/utils.js'
+import { mount, type VueWrapper } from '@vue/test-utils'
+import { findElementByText } from '@/tests/utils.ts'
 import { nextTick } from 'vue'
 import TheHeadline from '../TheHeadline.vue'
 
 describe('TheHeadline', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof TheHeadline>>
 
   const createComponent = () => {
     wrapper = mount(TheHeadline)
@@ -25,7 +25,7 @@ describe('TheHeadline', () => {
 
     const actionElement = findElementByText(wrapper, 'span', 'Build')
 
-    expect(actionElement.exists()).toBe(true)
+    expect(actionElement).toBeDefined()
   })
 
   it('changes action verb at a consistent interval', () => {
@@ -47,7 +47,7 @@ describe('TheHeadline', () => {
 
     const actionElement = findElementByText(wrapper, 'span', 'Create')
 
-    expect(actionElement.exists()).toBe(true)
+    expect(actionElement).toBeDefined()
   })
 
   it('removes interval when component disappears', () => {

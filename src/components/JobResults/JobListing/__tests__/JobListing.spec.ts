@@ -1,4 +1,4 @@
-import { mount, RouterLinkStub } from '@vue/test-utils'
+import { mount, RouterLinkStub, type VueWrapper } from '@vue/test-utils'
 import JobListing from '@/components/JobResults/JobListing/JobListing.vue'
 
 const JOB_PROP = {
@@ -9,7 +9,7 @@ const JOB_PROP = {
 }
 
 describe('JobListing', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof JobListing>>
 
   const createComponent = () => {
     wrapper = mount(JobListing, {
@@ -32,7 +32,7 @@ describe('JobListing', () => {
     propName
     ${'title'}
     ${'organization'}
-  `('renders job $propName', ({ propName }) => {
+  `('renders job $propName', ({ propName }: { propName: 'title' | 'organization' }) => {
     createComponent()
 
     const element = wrapper.find(`[data-test=job-${propName}]`)

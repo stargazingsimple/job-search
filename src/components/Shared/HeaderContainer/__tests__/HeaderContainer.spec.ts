@@ -1,11 +1,11 @@
-import { mount } from '@vue/test-utils'
-import { findElementByText } from '@/tests/utils'
+import { mount, type MountingOptions, type VueWrapper } from '@vue/test-utils'
+import { findElementByText } from '@/tests/utils.ts'
 import HeaderContainer from '../HeaderContainer.vue'
 
 describe('HeaderContainer', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof HeaderContainer>>
 
-  const createComponent = (slots) => {
+  const createComponent = (slots: MountingOptions<HeaderContainer>['slots']) => {
     wrapper = mount(HeaderContainer, {
       slots,
     })
@@ -28,7 +28,7 @@ describe('HeaderContainer', () => {
 
       const element = findElementByText(wrapper, slotWrapperElement, slotContent)
 
-      expect(element.exists()).toBe(true)
+      expect(element).toBeDefined()
     },
   )
 })

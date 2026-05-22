@@ -1,5 +1,5 @@
-import { flushPromises, mount } from '@vue/test-utils'
-import { findComponentByPropertyValue } from '@/tests/utils.js'
+import { flushPromises, mount, type VueWrapper } from '@vue/test-utils'
+import { findComponentByPropertyValue } from '@/tests/utils.ts'
 import JobSearchForm from '@/components/JobSearch/JobSearchForm/JobSearchForm.vue'
 
 const { router } = vi.hoisted(() => {
@@ -15,7 +15,7 @@ vi.mock('vue-router', () => {
 })
 
 describe('JobSearchForm', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof JobSearchForm>>
 
   const createComponent = () => {
     wrapper = mount(JobSearchForm, {
@@ -54,11 +54,14 @@ describe('JobSearchForm', () => {
     )
     const formElement = wrapper.find('form')
 
+    expect(roleTextInputComponent).toBeDefined()
+    expect(locationTextInputComponent).toBeDefined()
+
     const enteredRoleValue = 'Frontend'
     const enteredLocationValue = 'Los Angeles'
 
-    await roleTextInputComponent.setValue(enteredRoleValue)
-    await locationTextInputComponent.setValue(enteredLocationValue)
+    await roleTextInputComponent!.setValue(enteredRoleValue)
+    await locationTextInputComponent!.setValue(enteredLocationValue)
     await formElement.trigger('submit.prevent')
 
     vi.runAllTimers()

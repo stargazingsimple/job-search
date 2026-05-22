@@ -1,11 +1,11 @@
-import { mount } from '@vue/test-utils'
-import { findElementByText } from '@/tests/utils'
+import { mount, type VueWrapper } from '@vue/test-utils'
+import { findElementByText } from '@/tests/utils.ts'
 import CollapsibleAccordion from '../CollapsibleAccordion.vue'
 
 describe('CollapsibleAccordion', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof CollapsibleAccordion>>
 
-  const createComponent = (defaultSlot) => {
+  const createComponent = (defaultSlot: string) => {
     wrapper = mount(CollapsibleAccordion, {
       props: {
         header: 'Header',
@@ -42,6 +42,6 @@ describe('CollapsibleAccordion', () => {
 
     childElement = findElementByText(wrapper, 'h3', textContent)
 
-    expect(childElement.exists()).toBe(true)
+    expect(childElement).toBeDefined()
   })
 })

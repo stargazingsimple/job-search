@@ -1,7 +1,8 @@
-import { mount } from '@vue/test-utils'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import { createTestingPinia } from '@pinia/testing'
 import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
+import { mockedStore } from '@/tests/mocked-store.ts'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
 
 const { route } = vi.hoisted(() => {
@@ -17,7 +18,7 @@ vi.mock('vue-router', () => {
 })
 
 describe('TheSubNav', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof TheSubNav>>
 
   const createComponent = () => {
     wrapper = mount(TheSubNav, {
@@ -37,8 +38,9 @@ describe('TheSubNav', () => {
     createComponent()
 
     const jobCountElement = wrapper.find('[data-test="job-count"]')
-    const jobsStore = useJobsStore()
     const numberOfJobs = 16
+
+    const jobsStore = mockedStore(useJobsStore)
 
     jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
 
@@ -53,8 +55,9 @@ describe('TheSubNav', () => {
     createComponent()
 
     const jobCountElement = wrapper.find('[data-test="job-count"]')
-    const jobsStore = useJobsStore()
     const numberOfJobs = 16
+
+    const jobsStore = mockedStore(useJobsStore)
 
     jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
 

@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import JobFiltersSidebarCheckboxGroup from '../JobFiltersSidebarCheckboxGroup.vue'
 
@@ -21,7 +21,7 @@ const UNIQUE_VALUES = ['ValueA', 'ValueB']
 const ACTION_PROP = vi.fn()
 
 describe('JobFiltersSidebarCheckboxGroup', () => {
-  let wrapper
+  let wrapper: VueWrapper<InstanceType<typeof JobFiltersSidebarCheckboxGroup>>
 
   const createComponent = () => {
     wrapper = mount(JobFiltersSidebarCheckboxGroup, {
