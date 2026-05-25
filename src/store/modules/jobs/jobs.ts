@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { getJobs } from '@/api/jobs/jobs.ts'
 import { useUserStore } from '../user/user'
+import type { Job } from '@/api/jobs/types.ts'
 
 export const FETCH_JOBS = 'FETCH_JOBS'
 export const UNIQUE_ORGANIZATIONS = 'UNIQUE_ORGANIZATIONS'
@@ -9,8 +10,12 @@ export const FILTERED_JOBS = 'FILTERED_JOBS'
 export const INCLUDE_JOB_BY_ORGANIZATION = 'INCLUDE_JOB_BY_ORGANIZATION'
 export const INCLUDE_JOB_BY_JOB_TYPE = 'INCLUDE_JOB_BY_JOB_TYPE'
 
+export interface JobsState {
+  jobs: Job[]
+}
+
 export const useJobsStore = defineStore('jobs', {
-  state() {
+  state(): JobsState {
     return {
       jobs: [],
     }
@@ -24,7 +29,7 @@ export const useJobsStore = defineStore('jobs', {
   },
   getters: {
     [UNIQUE_ORGANIZATIONS](state) {
-      const uniqueOrganizations = new Set()
+      const uniqueOrganizations = new Set<string>()
 
       state.jobs.forEach(({ organization }) => {
         uniqueOrganizations.add(organization)
@@ -33,7 +38,7 @@ export const useJobsStore = defineStore('jobs', {
       return uniqueOrganizations
     },
     [UNIQUE_JOB_TYPES](state) {
-      const uniqueJobTypes = new Set()
+      const uniqueJobTypes = new Set<string>()
 
       state.jobs.forEach(({ jobType }) => {
         uniqueJobTypes.add(jobType)
@@ -41,7 +46,7 @@ export const useJobsStore = defineStore('jobs', {
 
       return uniqueJobTypes
     },
-    [INCLUDE_JOB_BY_ORGANIZATION]: () => (organization) => {
+    [INCLUDE_JOB_BY_ORGANIZATION]: () => (organization: string) => {
       const userStore = useUserStore()
 
       return (
@@ -49,12 +54,12 @@ export const useJobsStore = defineStore('jobs', {
         userStore.selectedOrganizations.includes(organization)
       )
     },
-    [INCLUDE_JOB_BY_JOB_TYPE]: () => (jobType) => {
+    [INCLUDE_JOB_BY_JOB_TYPE]: () => (jobType: string) => {
       const userStore = useUserStore()
 
       return userStore.selectedJobTypes.length === 0 || userStore.selectedJobTypes.includes(jobType)
     },
-    [FILTERED_JOBS](state) {
+    [FILTERED_JOBS](state): Job[] {
       return state.jobs
         .filter(({ organization }) => this.INCLUDE_JOB_BY_ORGANIZATION(organization))
         .filter(({ jobType }) => this.INCLUDE_JOB_BY_JOB_TYPE(jobType))

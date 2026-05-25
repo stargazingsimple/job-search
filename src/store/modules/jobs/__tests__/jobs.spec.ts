@@ -1,6 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { useUserStore } from '../../user/user'
 import { useJobsStore } from '../jobs'
+import type { Job } from '@/api/jobs/types.ts'
 
 const { getJobs } = vi.hoisted(() => ({
   getJobs: vi.fn(),
@@ -11,7 +12,7 @@ vi.mock('@/api/jobs/jobs.ts', () => ({
 }))
 
 describe('jobs store module', () => {
-  let store
+  let store: ReturnType<typeof useJobsStore>
 
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -55,7 +56,7 @@ describe('jobs store module', () => {
         {
           organization: 'Google',
         },
-      ]
+      ] as Job[]
 
       const result = store.UNIQUE_ORGANIZATIONS
 
@@ -73,7 +74,7 @@ describe('jobs store module', () => {
         {
           jobType: 'Full-time',
         },
-      ]
+      ] as Job[]
 
       const result = store.UNIQUE_JOB_TYPES
 
