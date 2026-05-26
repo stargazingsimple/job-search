@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const action = ref('Build')
-const interval = ref(null)
+const interval = ref<ReturnType<typeof setInterval>>()
 
 const actionClass = computed(() => action.value.toLowerCase())
 
@@ -16,7 +16,7 @@ const changeTitle = () => {
   }, 3000)
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   changeTitle()
 })
 
