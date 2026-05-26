@@ -2,7 +2,6 @@ import { flushPromises, mount, RouterLinkStub, type VueWrapper } from '@vue/test
 import { findElementByText } from '@/tests/utils.ts'
 import { createTestingPinia } from '@pinia/testing'
 import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
-import { mockedStore } from '@/tests/mocked-store.ts'
 import JobListings from '@/components/JobResults/JobListings/JobListings.vue'
 
 const { route } = vi.hoisted(() => {
@@ -22,7 +21,7 @@ vi.mock('vue-router', () => {
 })
 
 describe('JobListings', () => {
-  let wrapper: VueWrapper<InstanceType<typeof JobListings>>
+  let wrapper: VueWrapper<InstanceType<typeof JobListings>>, store: ReturnType<typeof useJobsStore>
 
   const createComponent = () => {
     wrapper = mount(JobListings, {
@@ -30,10 +29,14 @@ describe('JobListings', () => {
         stubs: {
           RouterLink: RouterLinkStub,
         },
-        plugins: [createTestingPinia({ stubActions: false })],
       },
     })
   }
+
+  beforeEach(() => {
+    const pinia = createTestingPinia({ stubActions: false })
+    store = useJobsStore(pinia)
+  })
 
   afterEach(() => {
     vi.clearAllMocks()
@@ -43,17 +46,14 @@ describe('JobListings', () => {
   it('fetches jobs', () => {
     createComponent()
 
-    const jobsStore = mockedStore(useJobsStore)
-
-    expect(jobsStore.FETCH_JOBS).toHaveBeenCalled()
+    expect(store.FETCH_JOBS).toHaveBeenCalled()
   })
 
   it('displays maximum of 10 jobs', async () => {
     createComponent()
 
-    const jobsStore = mockedStore(useJobsStore)
-
-    jobsStore.FILTERED_JOBS = Array(15).fill({})
+    // @ts-expect-error: Getter is read only
+    store.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 
@@ -87,9 +87,8 @@ describe('JobListings', () => {
 
     createComponent()
 
-    const jobsStore = mockedStore(useJobsStore)
-
-    jobsStore.FILTERED_JOBS = Array(15).fill({})
+    // @ts-expect-error: Getter is read only
+    store.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 
@@ -107,9 +106,8 @@ describe('JobListings', () => {
 
     createComponent()
 
-    const jobsStore = mockedStore(useJobsStore)
-
-    jobsStore.FILTERED_JOBS = Array(15).fill({})
+    // @ts-expect-error: Getter is read only
+    store.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 

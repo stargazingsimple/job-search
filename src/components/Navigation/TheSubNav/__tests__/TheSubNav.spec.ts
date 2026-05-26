@@ -1,8 +1,7 @@
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import { createTestingPinia } from '@pinia/testing'
 import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
-import { mockedStore } from '@/tests/mocked-store.ts'
+import { createTestingPinia } from '@pinia/testing'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
 
 const { route } = vi.hoisted(() => {
@@ -18,16 +17,20 @@ vi.mock('vue-router', () => {
 })
 
 describe('TheSubNav', () => {
-  let wrapper: VueWrapper<InstanceType<typeof TheSubNav>>
+  let wrapper: VueWrapper<InstanceType<typeof TheSubNav>>, store: ReturnType<typeof useJobsStore>
 
   const createComponent = () => {
     wrapper = mount(TheSubNav, {
       global: {
         stubs: ['fa-icon'],
-        plugins: [createTestingPinia({ stubActions: false })],
       },
     })
   }
+
+  beforeEach(() => {
+    const pinia = createTestingPinia({ stubActions: false })
+    store = useJobsStore(pinia)
+  })
 
   afterEach(() => {
     vi.clearAllMocks()
@@ -40,9 +43,8 @@ describe('TheSubNav', () => {
     const jobCountElement = wrapper.find('[data-test="job-count"]')
     const numberOfJobs = 16
 
-    const jobsStore = mockedStore(useJobsStore)
-
-    jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
+    // @ts-expect-error: Getter is read only
+    store.FILTERED_JOBS = Array(numberOfJobs).fill({})
 
     await nextTick()
 
@@ -57,9 +59,8 @@ describe('TheSubNav', () => {
     const jobCountElement = wrapper.find('[data-test="job-count"]')
     const numberOfJobs = 16
 
-    const jobsStore = mockedStore(useJobsStore)
-
-    jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
+    // @ts-expect-error: Getter is read only
+    store.FILTERED_JOBS = Array(numberOfJobs).fill({})
 
     await nextTick()
 
