@@ -1,4 +1,4 @@
-import HomeView from '@/views/HoveView/HomeView.vue'
+import HomeView from '@/views/HomeView/HomeView.vue'
 
 export default {
   path: '/',

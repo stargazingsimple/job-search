@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { getSpotlights } from '@/api/spotlights/spotlights.ts'
+import type { Spotlight } from '@/api/spotlights/types.ts'
 
-const spotlights = ref([])
+const spotlights = ref<Spotlight[]>([])
 
 onMounted(async () => {
   const { data } = await getSpotlights()
