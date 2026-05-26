@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type PropType, ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import CollapsibleAccordion from '@/components/Shared/CollapsibleAccordion/CollapsibleAccordion.vue'
 
@@ -9,7 +9,7 @@ const props = defineProps({
     required: true,
   },
   uniqueValues: {
-    type: Set as PropType<Set<string>>,
+    type: Set<string>,
     required: true,
   },
   action: {
@@ -20,7 +20,7 @@ const props = defineProps({
 
 const router = useRouter()
 
-const selectedValues = ref([])
+const selectedValues = ref<string[]>([])
 
 const selectValue = () => {
   props.action(selectedValues.value)
