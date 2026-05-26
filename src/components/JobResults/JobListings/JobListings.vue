@@ -9,7 +9,7 @@ const route = useRoute()
 const jobsStore = useJobsStore()
 
 const FILTERED_JOBS = computed(() => jobsStore.FILTERED_JOBS)
-const currentPage = computed(() => Number.parseInt(route.query.page || '1'))
+const currentPage = computed(() => Number.parseInt((route.query.page as string) || '1'))
 const displayedJobs = computed(() => {
   const firstJobIndex = (currentPage.value - 1) * 10
   const lastJobIndex = currentPage.value * 10
