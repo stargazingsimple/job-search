@@ -11,17 +11,11 @@ describe('MainNav', () => {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
         stubs: ['fa-icon', 'router-link', 'the-sub-nav'],
-        mocks: {
-          $route: {
-            name: 'job-results',
-          },
-        },
       },
     })
   }
 
   afterEach(() => {
-    vi.clearAllMocks()
     wrapper.unmount()
   })
 
