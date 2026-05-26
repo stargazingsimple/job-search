@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import type { PropType } from 'vue'
+import type { Job } from '@/api/jobs/types.ts'
+
 defineProps({
   job: {
-    type: Object,
+    type: Object as PropType<Job>,
     required: true,
   },
 })

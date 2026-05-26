@@ -1,4 +1,5 @@
 import { mount, RouterLinkStub, type VueWrapper } from '@vue/test-utils'
+import type { Job } from '@/api/jobs/types.ts'
 import JobListing from '@/components/JobResults/JobListing/JobListing.vue'
 
 const JOB_PROP = {
@@ -14,7 +15,7 @@ describe('JobListing', () => {
   const createComponent = () => {
     wrapper = mount(JobListing, {
       props: {
-        job: JOB_PROP,
+        job: JOB_PROP as Job,
       },
       global: {
         stubs: {
