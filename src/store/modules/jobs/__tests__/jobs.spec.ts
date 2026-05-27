@@ -1,6 +1,14 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { useUserStore } from '../../user/user'
-import { useJobsStore } from '../jobs'
+import {
+  FETCH_JOBS,
+  INCLUDE_JOB_BY_DEGREE,
+  INCLUDE_JOB_BY_JOB_TYPE,
+  INCLUDE_JOB_BY_ORGANIZATION,
+  UNIQUE_JOB_TYPES,
+  UNIQUE_ORGANIZATIONS,
+  useJobsStore,
+} from '../jobs'
 import type { Job } from '@/api/jobs/types.ts'
 
 const { getJobs } = vi.hoisted(() => ({
@@ -31,7 +39,7 @@ describe('jobs store module', () => {
 
       beforeEach(() => {
         getJobs.mockResolvedValue({ data: MOCK_RESOLVED_DATA })
-        store.FETCH_JOBS()
+        store[FETCH_JOBS]()
       })
 
       it('makes API request', () => {
@@ -58,7 +66,7 @@ describe('jobs store module', () => {
         },
       ] as Job[]
 
-      const result = store.UNIQUE_ORGANIZATIONS
+      const result = store[UNIQUE_ORGANIZATIONS]
 
       expect(result).toStrictEqual(new Set(['Google', 'Amazon']))
     })
@@ -76,7 +84,7 @@ describe('jobs store module', () => {
         },
       ] as Job[]
 
-      const result = store.UNIQUE_JOB_TYPES
+      const result = store[UNIQUE_JOB_TYPES]
 
       expect(result).toStrictEqual(new Set(['Full-time', 'Temporary']))
     })
@@ -93,7 +101,7 @@ describe('jobs store module', () => {
 
         userStore.selectedOrganizations = selectedOrganizations
 
-        const result = store.INCLUDE_JOB_BY_ORGANIZATION(organization)
+        const result = store[INCLUDE_JOB_BY_ORGANIZATION](organization)
 
         expect(result).toBe(true)
       },
@@ -111,10 +119,25 @@ describe('jobs store module', () => {
 
         userStore.selectedJobTypes = selectedJobTypes
 
-        const result = store.INCLUDE_JOB_BY_JOB_TYPE(jobType)
+        const result = store[INCLUDE_JOB_BY_JOB_TYPE](jobType)
 
         expect(result).toBe(true)
       },
     )
+
+    it.each`
+      selectedDegrees
+      ${[]}
+      ${["Master's", "Bachelor's"]}
+    `('verifies jobs are included for selected degrees $selectedDegrees', ({ selectedDegrees }) => {
+      const userStore = useUserStore()
+      const degree = "Master's"
+
+      userStore.selectedDegrees = selectedDegrees
+
+      const result = store[INCLUDE_JOB_BY_DEGREE](degree)
+
+      expect(result).toBe(true)
+    })
   })
 })

@@ -9,6 +9,7 @@ export const UNIQUE_JOB_TYPES = 'UNIQUE_JOB_TYPES'
 export const FILTERED_JOBS = 'FILTERED_JOBS'
 export const INCLUDE_JOB_BY_ORGANIZATION = 'INCLUDE_JOB_BY_ORGANIZATION'
 export const INCLUDE_JOB_BY_JOB_TYPE = 'INCLUDE_JOB_BY_JOB_TYPE'
+export const INCLUDE_JOB_BY_DEGREE = 'INCLUDE_JOB_BY_DEGREE'
 
 export interface JobsState {
   jobs: Job[]
@@ -59,10 +60,16 @@ export const useJobsStore = defineStore('jobs', {
 
       return userStore.selectedJobTypes.length === 0 || userStore.selectedJobTypes.includes(jobType)
     },
+    [INCLUDE_JOB_BY_DEGREE]: () => (degree: string) => {
+      const userStore = useUserStore()
+
+      return userStore.selectedDegrees.length === 0 || userStore.selectedDegrees.includes(degree)
+    },
     [FILTERED_JOBS](state): Job[] {
       return state.jobs
         .filter(({ organization }) => this.INCLUDE_JOB_BY_ORGANIZATION(organization))
         .filter(({ jobType }) => this.INCLUDE_JOB_BY_JOB_TYPE(jobType))
+        .filter(({ degree }) => this.INCLUDE_JOB_BY_DEGREE(degree))
     },
   },
 })
