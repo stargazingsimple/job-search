@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import { useRouter } from 'vue-router'
 import entity from '@/utils/entities/job-search'
@@ -7,17 +6,15 @@ import validationSchema from '@/utils/validation/schemas/job-search'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import TextInput from '@/components/Shared/TextInput/TextInput.vue'
 
-const fields = reactive({})
-
 const router = useRouter()
 const { validate, values } = useForm({ validationSchema })
 
-entity.forEach(({ fieldName, initialValue }) => {
+const fields = entity.map(({ fieldName, initialValue }) => {
   const { value, errorMessage } = useField(fieldName, undefined, {
     initialValue,
   })
 
-  fields[fieldName] = { value, errorMessage }
+  return { fieldName, fieldValue: value, errorMessage }
 })
 
 const handleSubmit = async () => {
@@ -38,27 +35,32 @@ const handleSubmit = async () => {
   >
     <fa-icon icon="search" class="mr-3 ml-4" />
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
-      <text-input
-        id="role"
-        v-model="fields['role'].value"
-        :error-message="fields['role'].errorMessage"
-        placeholder="Software engineer"
-        label="Role"
-        class="pr-3"
-      />
-      <span
-        class="border-brand-gray-3 bg-brand-gray-2 flex h-full items-center border-r border-l px-3"
-      >
-        in
-      </span>
-      <text-input
-        id="location"
-        v-model="fields['location'].value"
-        :error-message="fields['location'].errorMessage"
-        placeholder="Los Angeles"
-        label="Where?"
-        class="pl-3"
-      />
+      <template v-for="({ fieldName, fieldValue, errorMessage }, idx) in fields" :key="fieldName">
+        <text-input
+          v-if="fieldName === 'role'"
+          id="role"
+          v-model="fieldValue.value"
+          :error-message="errorMessage.value"
+          placeholder="Software engineer"
+          label="Role"
+          class="pr-3"
+        />
+        <span
+          v-if="idx < fields.length - 1"
+          class="border-brand-gray-3 bg-brand-gray-2 flex h-full items-center border-r border-l px-3"
+        >
+          in
+        </span>
+        <text-input
+          v-if="fieldName === 'location'"
+          id="location"
+          v-model="fieldValue.value"
+          :error-message="errorMessage.value"
+          placeholder="Los Angeles"
+          label="Where?"
+          class="pl-3"
+        />
+      </template>
     </div>
     <base-button type="secondary" text="Search" class="rounded-r-3xl" />
   </form>
