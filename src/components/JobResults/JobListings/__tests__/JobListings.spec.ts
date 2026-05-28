@@ -2,6 +2,7 @@ import { flushPromises, mount, RouterLinkStub, type VueWrapper } from '@vue/test
 import { findElementByText } from '@/tests/utils.ts'
 import { createTestingPinia } from '@pinia/testing'
 import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
+import { useDegreesStore } from '@/store/modules/degrees/degrees.ts'
 import JobListings from '@/components/JobResults/JobListings/JobListings.vue'
 
 const { route } = vi.hoisted(() => {
@@ -21,7 +22,9 @@ vi.mock('vue-router', () => {
 })
 
 describe('JobListings', () => {
-  let wrapper: VueWrapper<InstanceType<typeof JobListings>>, store: ReturnType<typeof useJobsStore>
+  let wrapper: VueWrapper<InstanceType<typeof JobListings>>,
+    jobsStore: ReturnType<typeof useJobsStore>,
+    degreesStore: ReturnType<typeof useDegreesStore>
 
   const createComponent = () => {
     wrapper = mount(JobListings, {
@@ -35,7 +38,8 @@ describe('JobListings', () => {
 
   beforeEach(() => {
     const pinia = createTestingPinia({ stubActions: false })
-    store = useJobsStore(pinia)
+    jobsStore = useJobsStore(pinia)
+    degreesStore = useDegreesStore(pinia)
   })
 
   afterEach(() => {
@@ -46,14 +50,20 @@ describe('JobListings', () => {
   it('fetches jobs', () => {
     createComponent()
 
-    expect(store.FETCH_JOBS).toHaveBeenCalled()
+    expect(jobsStore.FETCH_JOBS).toHaveBeenCalled()
+  })
+
+  it('fetches degrees', () => {
+    createComponent()
+
+    expect(degreesStore.FETCH_DEGREES).toHaveBeenCalled()
   })
 
   it('displays maximum of 10 jobs', async () => {
     createComponent()
 
     // @ts-expect-error: Getter is read only
-    store.FILTERED_JOBS = Array(15).fill({})
+    jobsStore.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 
@@ -88,7 +98,7 @@ describe('JobListings', () => {
     createComponent()
 
     // @ts-expect-error: Getter is read only
-    store.FILTERED_JOBS = Array(15).fill({})
+    jobsStore.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 
@@ -107,7 +117,7 @@ describe('JobListings', () => {
     createComponent()
 
     // @ts-expect-error: Getter is read only
-    store.FILTERED_JOBS = Array(15).fill({})
+    jobsStore.FILTERED_JOBS = Array(15).fill({})
 
     await flushPromises()
 

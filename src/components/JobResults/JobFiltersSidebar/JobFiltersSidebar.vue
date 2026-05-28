@@ -2,14 +2,17 @@
 import { computed } from 'vue'
 import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
 import { useUserStore } from '@/store/modules/user/user.ts'
+import { useDegreesStore } from '@/store/modules/degrees/degrees.ts'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebarCheckboxGroup/JobFiltersSidebarCheckboxGroup.vue'
 
 const jobsStore = useJobsStore()
 const userStore = useUserStore()
+const degreesStore = useDegreesStore()
 
 const UNIQUE_JOB_TYPES = computed(() => jobsStore.UNIQUE_JOB_TYPES)
 const UNIQUE_ORGANIZATIONS = computed(() => jobsStore.UNIQUE_ORGANIZATIONS)
+const UNIQUE_DEGREES = computed(() => degreesStore.UNIQUE_DEGREES)
 </script>
 
 <template>
@@ -21,6 +24,11 @@ const UNIQUE_ORGANIZATIONS = computed(() => jobsStore.UNIQUE_ORGANIZATIONS)
           <base-button text="Clear Filters" type="secondary" />
         </div>
       </div>
+      <job-filters-sidebar-checkbox-group
+        :action="userStore.ADD_SELECTED_DEGREES"
+        :unique-values="UNIQUE_DEGREES"
+        header="Degrees"
+      />
       <job-filters-sidebar-checkbox-group
         :action="userStore.ADD_SELECTED_JOB_TYPES"
         :unique-values="UNIQUE_JOB_TYPES"
