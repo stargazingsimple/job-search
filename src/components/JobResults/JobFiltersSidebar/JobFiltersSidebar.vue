@@ -4,6 +4,7 @@ import JobFiltersSidebarDegrees from '@/components/JobResults/JobFiltersSidebarD
 import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebarJobTypes/JobFiltersSidebarJobTypes.vue'
 import JobFiltersSidebarOrganizations from '@/components/JobResults/JobFiltersSidebarOrganizations/JobFiltersSidebarOrganizations.vue'
 import JobFiltersSidebarPrompt from '@/components/JobResults/JobFiltersSidebarPrompt/JobFiltersSidebarPrompt.vue'
+import JobFiltersSidebarSkills from '@/components/JobResults/JobFiltersSidebarSkills/JobFiltersSidebarSkills.vue'
 
 const filterItems = [
   {
@@ -25,6 +26,7 @@ const filterItems = [
   <div class="border-brand-gray-1 flex w-96 flex-col border-r border-solid bg-white p-4">
     <section class="pb-5">
       <job-filters-sidebar-prompt />
+      <job-filters-sidebar-skills />
       <collapsible-accordion
         v-for="{ header, component } in filterItems"
         :key="header"
