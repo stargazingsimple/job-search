@@ -16,7 +16,6 @@ vi.mock('vue-router', () => {
   }
 })
 
-const HEADER_PROP = 'Some header'
 const UNIQUE_VALUES = ['ValueA', 'ValueB']
 const ACTION_PROP = vi.fn()
 
@@ -26,7 +25,6 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
   const createComponent = () => {
     wrapper = mount(JobFiltersSidebarCheckboxGroup, {
       props: {
-        header: HEADER_PROP,
         uniqueValues: new Set(UNIQUE_VALUES),
         action: ACTION_PROP,
       },
@@ -45,10 +43,6 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
   it('renders unique list of values', async () => {
     createComponent()
 
-    const headerElement = wrapper.find('[data-test="header"]')
-
-    await headerElement.trigger('click')
-
     const valuesListItems = wrapper.findAll('li')
     const values = valuesListItems.map((item) => item.text())
 
@@ -60,10 +54,6 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
     async (selectedValue) => {
       createComponent()
 
-      const headerElement = wrapper.find('[data-test="header"]')
-
-      await headerElement.trigger('click')
-
       const checkboxElement = wrapper.find(`#${selectedValue}`)
 
       await checkboxElement.setValue()
@@ -74,10 +64,6 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
 
   it('navigates user to job results page to see fresh batch of filtered jobs', async () => {
     createComponent()
-
-    const headerElement = wrapper.find('[data-test="header"]')
-
-    await headerElement.trigger('click')
 
     const checkboxElement = wrapper.find(`#${UNIQUE_VALUES[0]}`)
 
