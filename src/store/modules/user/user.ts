@@ -1,38 +1,39 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-export const LOGIN_USER = 'LOGIN_USER'
-export const ADD_SELECTED_ORGANIZATIONS = 'ADD_SELECTED_ORGANIZATIONS'
-export const ADD_SELECTED_JOB_TYPES = 'ADD_SELECTED_JOB_TYPES'
-export const ADD_SELECTED_DEGREES = 'ADD_SELECTED_DEGREES'
+export const useUserStore = defineStore('user', () => {
+  const isLoggedIn = ref(false)
+  const selectedOrganizations = ref<string[]>([])
+  const selectedJobTypes = ref<string[]>([])
+  const selectedDegrees = ref<string[]>([])
 
-export interface UserState {
-  isLoggedIn: boolean
-  selectedOrganizations: string[]
-  selectedJobTypes: string[]
-  selectedDegrees: string[]
-}
+  const LOGIN_USER = () => {
+    isLoggedIn.value = true
+  }
+  const ADD_SELECTED_ORGANIZATIONS = (organizations: string[]) => {
+    selectedOrganizations.value = organizations
+  }
+  const ADD_SELECTED_JOB_TYPES = (jobTypes: string[]) => {
+    selectedJobTypes.value = jobTypes
+  }
+  const ADD_SELECTED_DEGREES = (degrees: string[]) => {
+    selectedDegrees.value = degrees
+  }
+  const CLEAR_USER_JOB_FILTER_SELECTIONS = () => {
+    selectedOrganizations.value = []
+    selectedJobTypes.value = []
+    selectedDegrees.value = []
+  }
 
-export const useUserStore = defineStore('user', {
-  state(): UserState {
-    return {
-      isLoggedIn: false,
-      selectedOrganizations: [],
-      selectedJobTypes: [],
-      selectedDegrees: [],
-    }
-  },
-  actions: {
-    [LOGIN_USER]() {
-      this.isLoggedIn = true
-    },
-    [ADD_SELECTED_ORGANIZATIONS](organizations: string[]) {
-      this.selectedOrganizations = organizations
-    },
-    [ADD_SELECTED_JOB_TYPES](jobTypes: string[]) {
-      this.selectedJobTypes = jobTypes
-    },
-    [ADD_SELECTED_DEGREES](degrees: string[]) {
-      this.selectedDegrees = degrees
-    },
-  },
+  return {
+    isLoggedIn,
+    selectedOrganizations,
+    selectedJobTypes,
+    selectedDegrees,
+    LOGIN_USER,
+    ADD_SELECTED_ORGANIZATIONS,
+    ADD_SELECTED_JOB_TYPES,
+    ADD_SELECTED_DEGREES,
+    CLEAR_USER_JOB_FILTER_SELECTIONS,
+  }
 })

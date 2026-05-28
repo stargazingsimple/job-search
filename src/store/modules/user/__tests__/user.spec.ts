@@ -1,11 +1,5 @@
 import { createPinia, setActivePinia } from 'pinia'
-import {
-  ADD_SELECTED_DEGREES,
-  ADD_SELECTED_JOB_TYPES,
-  ADD_SELECTED_ORGANIZATIONS,
-  LOGIN_USER,
-  useUserStore,
-} from '../user'
+import { useUserStore } from '../user'
 
 describe('user store module', () => {
   let store: ReturnType<typeof useUserStore>
@@ -36,7 +30,7 @@ describe('user store module', () => {
   describe('actions', () => {
     describe('LOGIN_USER', () => {
       beforeEach(() => {
-        store[LOGIN_USER]()
+        store.LOGIN_USER()
       })
 
       it('logs the user in', () => {
@@ -46,7 +40,7 @@ describe('user store module', () => {
 
     describe('ADD_SELECTED_ORGANIZATIONS', () => {
       it('updates organizations the user has chosen to filter jobs by', () => {
-        store[ADD_SELECTED_ORGANIZATIONS](['Org1', 'Org2'])
+        store.ADD_SELECTED_ORGANIZATIONS(['Org1', 'Org2'])
 
         expect(store.selectedOrganizations).toStrictEqual(['Org1', 'Org2'])
       })
@@ -54,7 +48,7 @@ describe('user store module', () => {
 
     describe('ADD_SELECTED_JOB_TYPES', () => {
       it('updates job types the user has chosen to filter jobs by', () => {
-        store[ADD_SELECTED_JOB_TYPES](['Full-time', 'Part-time'])
+        store.ADD_SELECTED_JOB_TYPES(['Full-time', 'Part-time'])
 
         expect(store.selectedJobTypes).toStrictEqual(['Full-time', 'Part-time'])
       })
@@ -62,9 +56,23 @@ describe('user store module', () => {
 
     describe('ADD_SELECTED_DEGREES', () => {
       it('updates degrees the user has chosen to filter jobs by', () => {
-        store[ADD_SELECTED_DEGREES](["Master's", "Bachelor's"])
+        store.ADD_SELECTED_DEGREES(["Master's", "Bachelor's"])
 
         expect(store.selectedDegrees).toStrictEqual(["Master's", "Bachelor's"])
+      })
+    })
+
+    describe('CLEAR_USER_JOB_FILTER_SELECTIONS', () => {
+      it('removes all job filters that user has chosen', () => {
+        store.selectedOrganizations = ['Random organization']
+        store.selectedJobTypes = ['Random job type']
+        store.selectedDegrees = ['Random degree']
+
+        store.CLEAR_USER_JOB_FILTER_SELECTIONS()
+
+        expect(store.selectedOrganizations).toStrictEqual([])
+        expect(store.selectedJobTypes).toStrictEqual([])
+        expect(store.selectedDegrees).toStrictEqual([])
       })
     })
   })

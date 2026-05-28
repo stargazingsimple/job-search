@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { LOGIN_USER, useUserStore } from '@/store/modules/user/user.ts'
+import { useUserStore } from '@/store/modules/user/user.ts'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import ProfileImage from '@/components/Navigation/ProfileImage/ProfileImage.vue'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
@@ -38,7 +38,7 @@ const headerHeightClass = computed(() => (isLoggedIn.value ? 'h-32' : 'h-16'))
         </nav>
         <div class="ml-auto flex h-full items-center">
           <profile-image v-if="isLoggedIn" />
-          <base-button v-else text="Sign in" @click="userStore[LOGIN_USER]" />
+          <base-button v-else text="Sign in" @click="userStore.LOGIN_USER" />
         </div>
       </div>
       <the-sub-nav v-if="isLoggedIn" />
