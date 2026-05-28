@@ -1,19 +1,27 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
 import { useUserStore } from '@/store/modules/user/user.ts'
-import { useDegreesStore } from '@/store/modules/degrees/degrees.ts'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
-import JobFiltersSidebarCheckboxGroup from '@/components/JobResults/JobFiltersSidebarCheckboxGroup/JobFiltersSidebarCheckboxGroup.vue'
 import CollapsibleAccordion from '@/components/Shared/CollapsibleAccordion/CollapsibleAccordion.vue'
+import JobFiltersSidebarDegrees from '@/components/JobResults/JobFiltersSidebarDegrees/JobFiltersSidebarDegrees.vue'
+import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebarJobTypes/JobFiltersSidebarJobTypes.vue'
+import JobFiltersSidebarOrganizations from '@/components/JobResults/JobFiltersSidebarOrganizations/JobFiltersSidebarOrganizations.vue'
 
-const jobsStore = useJobsStore()
 const userStore = useUserStore()
-const degreesStore = useDegreesStore()
 
-const UNIQUE_JOB_TYPES = computed(() => jobsStore.UNIQUE_JOB_TYPES)
-const UNIQUE_ORGANIZATIONS = computed(() => jobsStore.UNIQUE_ORGANIZATIONS)
-const UNIQUE_DEGREES = computed(() => degreesStore.UNIQUE_DEGREES)
+const filterItems = [
+  {
+    header: 'Degrees',
+    component: JobFiltersSidebarDegrees,
+  },
+  {
+    header: 'Job Types',
+    component: JobFiltersSidebarJobTypes,
+  },
+  {
+    header: 'Organizations',
+    component: JobFiltersSidebarOrganizations,
+  },
+]
 </script>
 
 <template>
@@ -29,23 +37,12 @@ const UNIQUE_DEGREES = computed(() => degreesStore.UNIQUE_DEGREES)
           />
         </div>
       </div>
-      <collapsible-accordion header="Degrees">
-        <job-filters-sidebar-checkbox-group
-          :action="userStore.ADD_SELECTED_DEGREES"
-          :unique-values="UNIQUE_DEGREES"
-        />
-      </collapsible-accordion>
-      <collapsible-accordion header="Job Types">
-        <job-filters-sidebar-checkbox-group
-          :action="userStore.ADD_SELECTED_JOB_TYPES"
-          :unique-values="UNIQUE_JOB_TYPES"
-        />
-      </collapsible-accordion>
-      <collapsible-accordion header="Organizations">
-        <job-filters-sidebar-checkbox-group
-          :action="userStore.ADD_SELECTED_ORGANIZATIONS"
-          :unique-values="UNIQUE_ORGANIZATIONS"
-        />
+      <collapsible-accordion
+        v-for="{ header, component } in filterItems"
+        :key="header"
+        :header="header"
+      >
+        <component :is="component" />
       </collapsible-accordion>
     </section>
   </div>
