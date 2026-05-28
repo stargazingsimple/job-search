@@ -76,7 +76,7 @@ export const useJobsStore = defineStore('jobs', {
         .filter(({ organization }) => this.INCLUDE_JOB_BY_ORGANIZATION(organization))
         .filter(({ jobType }) => this.INCLUDE_JOB_BY_JOB_TYPE(jobType))
         .filter(({ degree }) => this.INCLUDE_JOB_BY_DEGREE(degree))
-        .filter(({ title }) => this.INCLUDE_JOB_BY_DEGREE(title))
+        .filter(({ title }) => this.INCLUDE_JOB_BY_SKILL(title))
     },
   },
 })
