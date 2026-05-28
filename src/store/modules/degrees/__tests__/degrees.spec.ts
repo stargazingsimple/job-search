@@ -11,16 +11,16 @@ vi.mock('@/api/degrees/degrees.ts', () => ({
 }))
 
 describe('degrees store module', () => {
-  let store: ReturnType<typeof useDegreesStore>
+  let degreesStore: ReturnType<typeof useDegreesStore>
 
   beforeEach(() => {
     setActivePinia(createPinia())
-    store = useDegreesStore()
+    degreesStore = useDegreesStore()
   })
 
   describe('state', () => {
     it('stores all degrees that jobs may require', () => {
-      expect(store.degrees).toStrictEqual([])
+      expect(degreesStore.degrees).toStrictEqual([])
     })
   })
 
@@ -30,7 +30,7 @@ describe('degrees store module', () => {
 
       beforeEach(() => {
         getDegrees.mockResolvedValue({ data: MOCK_RESOLVED_DATA })
-        store.FETCH_DEGREES()
+        degreesStore.FETCH_DEGREES()
       })
 
       it('makes API request', () => {
@@ -38,14 +38,14 @@ describe('degrees store module', () => {
       })
 
       it('stores received degrees', () => {
-        expect(store.degrees).toStrictEqual(MOCK_RESOLVED_DATA)
+        expect(degreesStore.degrees).toStrictEqual(MOCK_RESOLVED_DATA)
       })
     })
   })
 
   describe('getters', () => {
     it('finds unique degrees from collection of degrees', () => {
-      store.degrees = [
+      degreesStore.degrees = [
         {
           degree: "Master's",
         },
@@ -57,7 +57,7 @@ describe('degrees store module', () => {
         },
       ] as Degree[]
 
-      const result = store.UNIQUE_DEGREES
+      const result = degreesStore.UNIQUE_DEGREES
 
       expect(result).toStrictEqual(new Set(["Master's", "Bachelor's"]))
     })

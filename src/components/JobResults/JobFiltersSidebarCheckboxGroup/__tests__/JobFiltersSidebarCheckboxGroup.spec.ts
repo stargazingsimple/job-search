@@ -1,5 +1,7 @@
+import { nextTick } from 'vue'
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
+import { useUserStore } from '@/store/modules/user/user.ts'
 import JobFiltersSidebarCheckboxGroup from '../JobFiltersSidebarCheckboxGroup.vue'
 
 const { router } = vi.hoisted(() => {
@@ -20,7 +22,8 @@ const UNIQUE_VALUES = ['ValueA', 'ValueB']
 const ACTION_PROP = vi.fn()
 
 describe('JobFiltersSidebarCheckboxGroup', () => {
-  let wrapper: VueWrapper<InstanceType<typeof JobFiltersSidebarCheckboxGroup>>
+  let wrapper: VueWrapper<InstanceType<typeof JobFiltersSidebarCheckboxGroup>>,
+    userStore: ReturnType<typeof useUserStore>
 
   const createComponent = () => {
     wrapper = mount(JobFiltersSidebarCheckboxGroup, {
@@ -28,12 +31,13 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
         uniqueValues: new Set(UNIQUE_VALUES),
         action: ACTION_PROP,
       },
-      global: {
-        stubs: ['fa-icon'],
-        plugins: [createTestingPinia({ stubActions: false })],
-      },
     })
   }
+
+  beforeEach(() => {
+    const pinia = createTestingPinia({ stubActions: false })
+    userStore = useUserStore(pinia)
+  })
 
   afterEach(() => {
     vi.clearAllMocks()
@@ -70,5 +74,23 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
     await checkboxElement.setValue()
 
     expect(router.push).toHaveBeenCalledWith({ name: 'job-results' })
+  })
+
+  it('unchecks any checked checkboxes', async () => {
+    createComponent()
+
+    const checkboxElementWrapper = wrapper.find(`#${UNIQUE_VALUES[0]}`)
+
+    await checkboxElementWrapper.setValue()
+
+    const checkboxElement = checkboxElementWrapper.element as HTMLInputElement
+
+    expect(checkboxElement.checked).toBe(true)
+
+    userStore.CLEAR_USER_JOB_FILTER_SELECTIONS()
+
+    await nextTick()
+
+    expect(checkboxElement.checked).toBe(false)
   })
 })

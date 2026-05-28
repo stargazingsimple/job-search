@@ -17,7 +17,8 @@ vi.mock('vue-router', () => {
 })
 
 describe('TheSubNav', () => {
-  let wrapper: VueWrapper<InstanceType<typeof TheSubNav>>, store: ReturnType<typeof useJobsStore>
+  let wrapper: VueWrapper<InstanceType<typeof TheSubNav>>,
+    jobsStore: ReturnType<typeof useJobsStore>
 
   const createComponent = () => {
     wrapper = mount(TheSubNav, {
@@ -29,7 +30,7 @@ describe('TheSubNav', () => {
 
   beforeEach(() => {
     const pinia = createTestingPinia({ stubActions: false })
-    store = useJobsStore(pinia)
+    jobsStore = useJobsStore(pinia)
   })
 
   afterEach(() => {
@@ -44,7 +45,7 @@ describe('TheSubNav', () => {
     const numberOfJobs = 16
 
     // @ts-expect-error: Getter is read only
-    store.FILTERED_JOBS = Array(numberOfJobs).fill({})
+    jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
 
     await nextTick()
 
@@ -60,7 +61,7 @@ describe('TheSubNav', () => {
     const numberOfJobs = 16
 
     // @ts-expect-error: Getter is read only
-    store.FILTERED_JOBS = Array(numberOfJobs).fill({})
+    jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
 
     await nextTick()
 
