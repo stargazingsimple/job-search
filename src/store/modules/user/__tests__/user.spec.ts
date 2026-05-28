@@ -25,6 +25,10 @@ describe('user store module', () => {
     it('stores degrees that the user would like to filter jobs by', () => {
       expect(userStore.selectedDegrees).toStrictEqual([])
     })
+
+    it('stores users search term for skills and qualifications', () => {
+      expect(userStore.skillsSearchTerm).toBe('')
+    })
   })
 
   describe('actions', () => {
@@ -59,6 +63,16 @@ describe('user store module', () => {
         userStore.ADD_SELECTED_DEGREES(["Master's", "Bachelor's"])
 
         expect(userStore.selectedDegrees).toStrictEqual(["Master's", "Bachelor's"])
+      })
+    })
+
+    describe('UPDATE_SKILLS_SEARCH_TERM', () => {
+      it('receives search term for skills the user has entered', () => {
+        userStore.skillsSearchTerm = ''
+
+        userStore.UPDATE_SKILLS_SEARCH_TERM('Vue')
+
+        expect(userStore.skillsSearchTerm).toBe('Vue')
       })
     })
 

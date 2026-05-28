@@ -139,5 +139,25 @@ describe('jobs store module', () => {
 
       expect(result).toBe(true)
     })
+
+    it.each`
+      skillsSearchTerm
+      ${'Vue'}
+      ${'vuE'}
+      ${''}
+    `(
+      "identifies if job matches user's skill by $skillsSearchTerm search term",
+      ({ skillsSearchTerm }) => {
+        const userStore = useUserStore()
+        const jobTitle = 'Vue Developer'
+
+        userStore.skillsSearchTerm = skillsSearchTerm
+        jobsStore.jobs = [{ title: jobTitle }] as Job[]
+
+        const result = jobsStore.INCLUDE_JOB_BY_SKILL(jobTitle)
+
+        expect(result).toBe(true)
+      },
+    )
   })
 })
