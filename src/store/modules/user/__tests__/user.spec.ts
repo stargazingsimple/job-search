@@ -81,12 +81,14 @@ describe('user store module', () => {
         userStore.selectedOrganizations = ['Random organization']
         userStore.selectedJobTypes = ['Random job type']
         userStore.selectedDegrees = ['Random degree']
+        userStore.skillsSearchTerm = 'Vue Developer'
 
         userStore.CLEAR_USER_JOB_FILTER_SELECTIONS()
 
         expect(userStore.selectedOrganizations).toStrictEqual([])
         expect(userStore.selectedJobTypes).toStrictEqual([])
         expect(userStore.selectedDegrees).toStrictEqual([])
+        expect(userStore.skillsSearchTerm).toBe('')
       })
     })
   })
