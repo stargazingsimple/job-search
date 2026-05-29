@@ -20,7 +20,7 @@ const skillsSearchTerm = computed({
       v-model.lazy.trim="skillsSearchTerm"
       type="text"
       class="border-brand-gray-1 shadow-gray h-12 w-full rounded border-solid p-3 text-base"
-      placeholder="Computer programming, Finance degree"
+      placeholder="Computer programming"
     />
   </div>
 </template>
