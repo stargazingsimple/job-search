@@ -2,14 +2,14 @@ import { mount, type VueWrapper } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { useUserStore } from '@/store/modules/user/user.ts'
 import { nextTick } from 'vue'
-import JobFiltersSidebarSkills from '@/components/JobResults/JobFiltersSidebarSkills/JobFiltersSidebarSkills.vue'
+import JobFiltersSidebarLocations from '@/components/JobResults/JobFiltersSidebarLocations/JobFiltersSidebarLocations.vue'
 
-describe('JobFiltersSidebarSkills', () => {
-  let wrapper: VueWrapper<InstanceType<typeof JobFiltersSidebarSkills>>,
+describe('JobFiltersSidebarLocations', () => {
+  let wrapper: VueWrapper<InstanceType<typeof JobFiltersSidebarLocations>>,
     userStore: ReturnType<typeof useUserStore>
 
   const createComponent = () => {
-    wrapper = mount(JobFiltersSidebarSkills)
+    wrapper = mount(JobFiltersSidebarLocations)
   }
 
   beforeEach(() => {
@@ -21,29 +21,29 @@ describe('JobFiltersSidebarSkills', () => {
     wrapper.unmount()
   })
 
-  it('populates skill search input from store', async () => {
+  it('populates location search input from store', async () => {
     createComponent()
 
-    userStore.skillsSearchTerm = 'Programmer'
+    userStore.locationsSearchTerm = 'New York'
 
     await nextTick()
 
     const inputElement = wrapper.find('input').element
 
-    expect(inputElement.value).toBe('Programmer')
+    expect(inputElement.value).toBe('New York')
   })
 
-  it('writes skill user input to store', async () => {
+  it('writes location user input to store', async () => {
     createComponent()
 
-    userStore.skillsSearchTerm = ''
+    userStore.locationsSearchTerm = ''
 
     const inputElement = wrapper.find('input')
 
-    inputElement.element.value = ' V'
+    inputElement.element.value = ' York'
 
     await inputElement.trigger('change')
 
-    expect(userStore.UPDATE_SKILLS_SEARCH_TERM).toHaveBeenCalledWith('V')
+    expect(userStore.UPDATE_LOCATIONS_SEARCH_TERM).toHaveBeenCalledWith('York')
   })
 })

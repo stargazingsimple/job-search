@@ -8,6 +8,7 @@ import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebar
 import JobFiltersSidebarOrganizations from '@/components/JobResults/JobFiltersSidebarOrganizations/JobFiltersSidebarOrganizations.vue'
 import JobFiltersSidebarPrompt from '@/components/JobResults/JobFiltersSidebarPrompt/JobFiltersSidebarPrompt.vue'
 import JobFiltersSidebarSkills from '@/components/JobResults/JobFiltersSidebarSkills/JobFiltersSidebarSkills.vue'
+import JobFiltersSidebarLocations from '@/components/JobResults/JobFiltersSidebarLocations/JobFiltersSidebarLocations.vue'
 
 const filterItems = [
   {
@@ -29,8 +30,10 @@ const userStore = useUserStore()
 
 const parseSkillsSearchTerm = () => {
   const role = (route.query.role as string) || ''
+  const location = (route.query.location as string) || ''
 
   userStore.UPDATE_SKILLS_SEARCH_TERM(role)
+  userStore.UPDATE_LOCATIONS_SEARCH_TERM(location)
 }
 
 onMounted(() => {
@@ -43,6 +46,7 @@ onMounted(() => {
     <section class="pb-5">
       <job-filters-sidebar-prompt />
       <job-filters-sidebar-skills />
+      <job-filters-sidebar-locations />
       <collapsible-accordion
         v-for="{ header, component } in filterItems"
         :key="header"

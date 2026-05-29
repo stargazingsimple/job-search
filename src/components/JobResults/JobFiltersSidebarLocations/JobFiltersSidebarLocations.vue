@@ -4,12 +4,12 @@ import { useUserStore } from '@/store/modules/user/user.ts'
 
 const userStore = useUserStore()
 
-const skillsSearchTerm = computed({
+const locationsSearchTerm = computed({
   get() {
-    return userStore.skillsSearchTerm
+    return userStore.locationsSearchTerm
   },
   set(value: string) {
-    userStore.UPDATE_SKILLS_SEARCH_TERM(value)
+    userStore.UPDATE_LOCATIONS_SEARCH_TERM(value)
   },
 })
 </script>
@@ -17,10 +17,10 @@ const skillsSearchTerm = computed({
 <template>
   <div class="mt-2">
     <input
-      v-model.lazy.trim="skillsSearchTerm"
+      v-model.lazy.trim="locationsSearchTerm"
       type="text"
       class="border-brand-gray-1 shadow-gray h-12 w-full rounded border-solid p-3 text-base"
-      placeholder="Role"
+      placeholder="Location"
     />
   </div>
 </template>
