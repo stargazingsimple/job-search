@@ -29,6 +29,10 @@ describe('user store module', () => {
     it('stores users search term for skills and qualifications', () => {
       expect(userStore.skillsSearchTerm).toBe('')
     })
+
+    it('stores users search term for locations', () => {
+      expect(userStore.locationsSearchTerm).toBe('')
+    })
   })
 
   describe('actions', () => {
@@ -76,12 +80,23 @@ describe('user store module', () => {
       })
     })
 
+    describe('UPDATE_LOCATIONS_SEARCH_TERM', () => {
+      it('receives search term for skills the user has entered', () => {
+        userStore.locationsSearchTerm = ''
+
+        userStore.UPDATE_LOCATIONS_SEARCH_TERM('New York')
+
+        expect(userStore.locationsSearchTerm).toBe('New York')
+      })
+    })
+
     describe('CLEAR_USER_JOB_FILTER_SELECTIONS', () => {
       it('removes all job filters that user has chosen', () => {
         userStore.selectedOrganizations = ['Random organization']
         userStore.selectedJobTypes = ['Random job type']
         userStore.selectedDegrees = ['Random degree']
         userStore.skillsSearchTerm = 'Vue Developer'
+        userStore.locationsSearchTerm = 'New York'
 
         userStore.CLEAR_USER_JOB_FILTER_SELECTIONS()
 
@@ -89,6 +104,7 @@ describe('user store module', () => {
         expect(userStore.selectedJobTypes).toStrictEqual([])
         expect(userStore.selectedDegrees).toStrictEqual([])
         expect(userStore.skillsSearchTerm).toBe('')
+        expect(userStore.locationsSearchTerm).toBe('')
       })
     })
   })

@@ -5,6 +5,8 @@ import {
   INCLUDE_JOB_BY_DEGREE,
   INCLUDE_JOB_BY_JOB_TYPE,
   INCLUDE_JOB_BY_ORGANIZATION,
+  INCLUDE_JOB_BY_SKILL,
+  INCLUDE_JOB_BY_LOCATIONS,
   UNIQUE_JOB_TYPES,
   UNIQUE_ORGANIZATIONS,
   useJobsStore,
@@ -154,7 +156,27 @@ describe('jobs store module', () => {
         userStore.skillsSearchTerm = skillsSearchTerm
         jobsStore.jobs = [{ title: jobTitle }] as Job[]
 
-        const result = jobsStore.INCLUDE_JOB_BY_SKILL(jobTitle)
+        const result = jobsStore[INCLUDE_JOB_BY_SKILL](jobTitle)
+
+        expect(result).toBe(true)
+      },
+    )
+
+    it.each`
+      locationsSearchTerm
+      ${'York'}
+      ${'yorK'}
+      ${''}
+    `(
+      "identifies if job matches user's locations by $locationsSearchTerm search term",
+      ({ locationsSearchTerm }) => {
+        const userStore = useUserStore()
+        const jobLocations = ['New york']
+
+        userStore.locationsSearchTerm = locationsSearchTerm
+        jobsStore.jobs = [{ locations: jobLocations }] as Job[]
+
+        const result = jobsStore[INCLUDE_JOB_BY_LOCATIONS](jobLocations)
 
         expect(result).toBe(true)
       },
