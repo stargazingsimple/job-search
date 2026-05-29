@@ -12,6 +12,7 @@ export const INCLUDE_JOB_BY_JOB_TYPE = 'INCLUDE_JOB_BY_JOB_TYPE'
 export const INCLUDE_JOB_BY_DEGREE = 'INCLUDE_JOB_BY_DEGREE'
 export const INCLUDE_JOB_BY_SKILL = 'INCLUDE_JOB_BY_SKILL'
 export const INCLUDE_JOB_BY_LOCATIONS = 'INCLUDE_JOB_BY_LOCATIONS'
+export const GET_JOB_BY_ID = 'GET_JOB_BY_ID'
 
 export interface JobsState {
   jobs: Job[]
@@ -87,5 +88,6 @@ export const useJobsStore = defineStore('jobs', {
         .filter(({ title }) => this.INCLUDE_JOB_BY_SKILL(title))
         .filter(({ locations }) => this.INCLUDE_JOB_BY_LOCATIONS(locations))
     },
+    [GET_JOB_BY_ID]: (state) => (id: number) => state.jobs.find((job) => job.id === id),
   },
 })
