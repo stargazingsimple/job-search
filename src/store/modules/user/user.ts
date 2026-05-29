@@ -24,8 +24,8 @@ export const useUserStore = defineStore('user', () => {
   const UPDATE_SKILLS_SEARCH_TERM = (term: string) => {
     skillsSearchTerm.value = term
   }
-  const UPDATE_LOCATIONS_SEARCH_TERM = (location: string) => {
-    locationsSearchTerm.value = location
+  const UPDATE_LOCATIONS_SEARCH_TERM = (term: string) => {
+    locationsSearchTerm.value = term
   }
   const CLEAR_USER_JOB_FILTER_SELECTIONS = () => {
     selectedOrganizations.value = []

@@ -81,7 +81,7 @@ describe('user store module', () => {
     })
 
     describe('UPDATE_LOCATIONS_SEARCH_TERM', () => {
-      it('receives search term for skills the user has entered', () => {
+      it('receives search term for locations the user has entered', () => {
         userStore.locationsSearchTerm = ''
 
         userStore.UPDATE_LOCATIONS_SEARCH_TERM('New York')
