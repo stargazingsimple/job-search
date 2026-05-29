@@ -6,8 +6,8 @@ import SpotlightsListItem from '../SpotlightsListItem/SpotlightsListItem.vue'
 </script>
 
 <template>
-  <main class="flex h-screen flex-col">
-    <section class="flex h-screen flex-col pt-10 pb-20">
+  <main class="flex flex-col">
+    <section class="flex flex-col pt-10 pb-15">
       <div class="grid grid-cols-12">
         <div class="col-span-1 col-start-1"></div>
         <div class="col-span-5 col-start-2">
@@ -24,7 +24,7 @@ import SpotlightsListItem from '../SpotlightsListItem/SpotlightsListItem.vue'
         <div class="col-span-1 col-start-12"></div>
       </div>
     </section>
-    <spotlights-list class="flex flex-row justify-center pb-16">
+    <spotlights-list class="flex flex-row justify-center pb-2">
       <template #default="{ title, description, img }">
         <spotlights-list-item :title="title" :description="description" :img="img" />
       </template>

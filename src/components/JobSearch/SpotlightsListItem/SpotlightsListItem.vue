@@ -18,7 +18,7 @@ defineProps({
 <template>
   <router-link
     to="/job/results"
-    class="bg-brand-gray-2 mx-5 flex h-96 w-72 flex-col rounded-lg border"
+    class="bg-brand-gray-2 mx-5 flex h-96 w-72 flex-col rounded border"
   >
     <img :src="img" :alt="title" class="object-contain" />
     <div class="mt-3 h-48 px-6 py-4">
