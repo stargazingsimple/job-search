@@ -31,6 +31,7 @@ describe('JobListings', () => {
       global: {
         stubs: {
           RouterLink: RouterLinkStub,
+          FaIcon: true,
         },
       },
     })
@@ -80,6 +81,9 @@ describe('JobListings', () => {
     route.query.page = pageValue
 
     createComponent()
+
+    // @ts-expect-error: Getter is read only
+    jobsStore.FILTERED_JOBS = Array(21).fill({})
 
     await flushPromises()
 

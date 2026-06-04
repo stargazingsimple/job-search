@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Job } from '@/api/jobs/types'
-import { GET_JOB_BY_ID, useJobsStore } from '@/store/modules/jobs/jobs'
+import { FETCH_JOBS, GET_JOB_BY_ID, useJobsStore } from '@/store/modules/jobs/jobs'
 import { onBeforeMount, ref } from 'vue'
+import EmptyState from '@/components/Shared/EmptyState/EmptyState.vue'
 
 const props = defineProps({
   id: {
@@ -14,7 +15,11 @@ const job = ref<Job | null>(null)
 
 const jobsStore = useJobsStore()
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
+  if (!jobsStore.jobs.length) {
+    await jobsStore[FETCH_JOBS]()
+  }
+
   const data = jobsStore[GET_JOB_BY_ID](Number(props.id))
 
   if (data) {
@@ -84,4 +89,5 @@ onBeforeMount(() => {
       </dl>
     </div>
   </div>
+  <empty-state v-else />
 </template>

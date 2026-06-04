@@ -5,6 +5,7 @@ import { useJobsStore } from '@/store/modules/jobs/jobs.ts'
 import { useDegreesStore } from '@/store/modules/degrees/degrees.ts'
 import usePreviousAndNextPages from '@/composables/usePreviousAndNextPages/usePreviousAndNextPages'
 import JobListing from '@/components/JobResults/JobListing/JobListing.vue'
+import EmptyState from '@/components/Shared/EmptyState/EmptyState.vue'
 
 const route = useRoute()
 const jobsStore = useJobsStore()
@@ -30,29 +31,32 @@ onMounted(() => {
 
 <template>
   <main class="bg-brand-gray-2 flex-auto p-8">
-    <ol>
-      <job-listing v-for="job in displayedJobs" :key="job.id" :job="job" />
-    </ol>
-    <div class="mx-auto mt-8">
-      <div class="flex flex-row flex-nowrap">
-        <p class="grow text-sm" data-test="current-page">Page {{ currentPage }}</p>
-        <div class="flex items-center justify-center">
-          <router-link
-            v-if="previousPage"
-            :to="{ name: 'job-results', query: { page: previousPage } }"
-            class="text-brand-blue-1 mx-3 text-sm font-semibold"
-          >
-            Previous
-          </router-link>
-          <router-link
-            v-if="nextPage"
-            :to="{ name: 'job-results', query: { page: nextPage } }"
-            class="text-brand-blue-1 mx-3 text-sm font-semibold"
-          >
-            Next
-          </router-link>
+    <template v-if="displayedJobs.length">
+      <ol>
+        <job-listing v-for="job in displayedJobs" :key="job.id" :job="job" />
+      </ol>
+      <div class="mx-auto mt-8">
+        <div class="flex flex-row flex-nowrap">
+          <p class="grow text-sm" data-test="current-page">Page {{ currentPage }}</p>
+          <div class="flex items-center justify-center">
+            <router-link
+              v-if="previousPage"
+              :to="{ name: 'job-results', query: { page: previousPage } }"
+              class="text-brand-blue-1 mx-3 text-sm font-semibold"
+            >
+              Previous
+            </router-link>
+            <router-link
+              v-if="nextPage"
+              :to="{ name: 'job-results', query: { page: nextPage } }"
+              class="text-brand-blue-1 mx-3 text-sm font-semibold"
+            >
+              Next
+            </router-link>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
+    <empty-state v-else />
   </main>
 </template>

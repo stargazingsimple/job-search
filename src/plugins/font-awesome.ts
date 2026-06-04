@@ -5,13 +5,14 @@ import {
   faAngleUp,
   faCheck,
   faCircle,
+  faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faSearch)
-library.add(faAngleDown)
-library.add(faAngleUp)
-library.add(faCheck)
-library.add(faCircle)
+const icons = [faSearch, faAngleDown, faAngleUp, faCheck, faCircle, faMagnifyingGlass]
+
+for (const icon of icons) {
+  library.add(icon)
+}
 
 export default FontAwesomeIcon
