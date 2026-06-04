@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Job } from '@/api/jobs/types'
 import { GET_JOB_BY_ID, useJobsStore } from '@/store/modules/jobs/jobs'
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 
 const props = defineProps({
   id: {
@@ -14,7 +14,7 @@ const job = ref<Job | null>(null)
 
 const jobsStore = useJobsStore()
 
-onMounted(() => {
+onBeforeMount(() => {
   const data = jobsStore[GET_JOB_BY_ID](Number(props.id))
 
   if (data) {
