@@ -1,4 +1,5 @@
 import { mount, type VueWrapper } from '@vue/test-utils'
+import { createTestingPinia } from '@pinia/testing'
 import App from '@/App/App.vue'
 
 describe('App', () => {
@@ -9,6 +10,7 @@ describe('App', () => {
       global: {
         stubs: ['fa-icon', 'router-link', 'router-view', 'main-nav'],
       },
+      plugins: [createTestingPinia({ stubActions: false })],
     })
   }
 

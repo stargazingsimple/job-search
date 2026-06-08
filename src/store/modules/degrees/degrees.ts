@@ -7,9 +7,10 @@ export const useDegreesStore = defineStore('degrees', () => {
   const degrees = ref<Degree[]>([])
 
   const FETCH_DEGREES = async () => {
-    const { data } = await getDegrees()
+    const res = await getDegrees()
+    if (!res) return
 
-    degrees.value = data
+    degrees.value = res.data
   }
 
   const UNIQUE_DEGREES = computed(() => {

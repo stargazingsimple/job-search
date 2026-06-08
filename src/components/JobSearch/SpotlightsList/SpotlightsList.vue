@@ -6,9 +6,10 @@ import type { Spotlight } from '@/api/spotlights/types.ts'
 const spotlights = ref<Spotlight[]>([])
 
 onMounted(async () => {
-  const { data } = await getSpotlights()
+  const res = await getSpotlights()
+  if (!res) return
 
-  spotlights.value = data
+  spotlights.value = res.data
 })
 </script>
 
