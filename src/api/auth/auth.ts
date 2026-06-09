@@ -1,7 +1,7 @@
 import { AUTH } from '@/api'
-import type { SignInData } from '@/api/auth/types.ts'
+import type { AuthData } from '@/api/auth/types.ts'
 
-export const signIn = async ({ email, password }: SignInData) => {
+export const signIn = async ({ email, password }: AuthData) => {
   return await AUTH.post('/accounts:signInWithPassword', {
     email,
     password,
@@ -9,7 +9,7 @@ export const signIn = async ({ email, password }: SignInData) => {
   })
 }
 
-export const signUp = async ({ email, password }: SignInData) => {
+export const signUp = async ({ email, password }: AuthData) => {
   return await AUTH.post('/accounts:signUp', {
     email,
     password,

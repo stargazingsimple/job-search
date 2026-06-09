@@ -1,4 +1,5 @@
-export interface SignInData {
+export interface AuthData {
   email: string
-  password: string
+  password?: string
+  fullName?: string
 }
