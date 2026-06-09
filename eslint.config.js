@@ -31,6 +31,16 @@ export default defineConfigWithVueTs([
 
   js.configs.recommended,
   vueTsConfigs.recommended,
+  {
+    rules: {
+      'vue/v-slot-style': [
+        'error',
+        {
+          atComponent: 'shorthand',
+        },
+      ],
+    },
+  },
   ...pluginVue.configs['flat/recommended'],
 
   {
