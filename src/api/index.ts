@@ -2,6 +2,8 @@ import axios from 'axios'
 import { useToast } from 'vue-toastification'
 import { HIDE_LOADER, SHOW_LOADER, useLoaderStore } from '@/store/modules/loader/loader'
 
+const API_KEY = 'AIzaSyDPgrEoezia5sTk4QUgC3QLbOztudY2JlE'
+
 const toast = useToast()
 
 export const HTTP = axios.create({
@@ -38,3 +40,11 @@ HTTP.interceptors.response.use(
     loaderStore[HIDE_LOADER]()
   },
 )
+
+export const AUTH = axios.create({
+  baseURL: 'https://identitytoolkit.googleapis.com/v1/',
+  timeout: 10000,
+  params: {
+    key: API_KEY,
+  },
+})
