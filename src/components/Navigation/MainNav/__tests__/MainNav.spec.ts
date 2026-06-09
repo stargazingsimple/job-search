@@ -1,7 +1,20 @@
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { findComponentByPropertyValue } from '@/tests/utils.ts'
-import { createTestingPinia } from '@pinia/testing'
 import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
+
+const { route } = vi.hoisted(() => {
+  return {
+    route: {
+      name: 'home',
+    },
+  }
+})
+
+vi.mock('vue-router', () => {
+  return {
+    useRoute: vi.fn().mockReturnValue(route),
+  }
+})
 
 describe('MainNav', () => {
   let wrapper: VueWrapper<InstanceType<typeof MainNav>>
@@ -9,7 +22,6 @@ describe('MainNav', () => {
   const createComponent = () => {
     wrapper = mount(MainNav, {
       global: {
-        plugins: [createTestingPinia({ stubActions: false })],
         stubs: ['fa-icon', 'router-link', 'the-sub-nav'],
       },
     })
@@ -38,21 +50,13 @@ describe('MainNav', () => {
     expect(routerLinkComponent).toBeDefined()
   })
 
-  it("should displays 'ProfileImage' component", async () => {
-    let profileImageComponent
+  it("should displays 'TheSubNav' component", () => {
+    route.name = 'job-results'
 
     createComponent()
 
-    profileImageComponent = wrapper.findComponent({ name: 'ProfileImage' })
+    const theSubNavComponent = wrapper.findComponent({ name: 'TheSubNav' })
 
-    expect(profileImageComponent.exists()).toBe(false)
-
-    const actionButtonComponent = wrapper.findComponent({ name: 'BaseButton' })
-
-    await actionButtonComponent.trigger('click')
-
-    profileImageComponent = wrapper.findComponent({ name: 'ProfileImage' })
-
-    expect(profileImageComponent.exists()).toBe(true)
+    expect(theSubNavComponent.exists()).toBe(true)
   })
 })

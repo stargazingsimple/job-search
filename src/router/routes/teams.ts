@@ -4,4 +4,7 @@ export default {
   path: '/teams',
   name: 'teams',
   component: TeamsView,
+  meta: {
+    layout: 'main',
+  },
 }

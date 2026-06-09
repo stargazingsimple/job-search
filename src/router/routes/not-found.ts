@@ -4,4 +4,7 @@ export default {
   name: 'not-found',
   path: '/:pathMatch(.*)*',
   component: NotFoundView,
+  meta: {
+    layout: 'main',
+  },
 }

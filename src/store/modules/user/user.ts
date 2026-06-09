@@ -2,16 +2,12 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
-  const isLoggedIn = ref(false)
   const selectedOrganizations = ref<string[]>([])
   const selectedJobTypes = ref<string[]>([])
   const selectedDegrees = ref<string[]>([])
   const skillsSearchTerm = ref('')
   const locationsSearchTerm = ref('')
 
-  const LOGIN_USER = () => {
-    isLoggedIn.value = true
-  }
   const ADD_SELECTED_ORGANIZATIONS = (organizations: string[]) => {
     selectedOrganizations.value = organizations
   }
@@ -36,13 +32,11 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return {
-    isLoggedIn,
     selectedOrganizations,
     selectedJobTypes,
     selectedDegrees,
     skillsSearchTerm,
     locationsSearchTerm,
-    LOGIN_USER,
     ADD_SELECTED_ORGANIZATIONS,
     ADD_SELECTED_JOB_TYPES,
     ADD_SELECTED_DEGREES,

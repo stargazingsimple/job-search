@@ -1,12 +1,12 @@
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
-import App from '@/App/App.vue'
+import MainLayout from '../MainLayout.vue'
 
-describe('App', () => {
-  let wrapper: VueWrapper<InstanceType<typeof App>>
+describe('MainLayout', () => {
+  let wrapper: VueWrapper<InstanceType<typeof MainLayout>>
 
   const createComponent = () => {
-    wrapper = mount(App, {
+    wrapper = mount(MainLayout, {
       global: {
         stubs: ['fa-icon', 'router-link', 'router-view', 'main-nav'],
       },
