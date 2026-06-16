@@ -8,6 +8,10 @@ defineProps({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    default: 'text',
+  },
   placeholder: {
     type: String,
     required: true,
@@ -30,14 +34,14 @@ const onInput = (event: Event) => {
 </script>
 
 <template>
-  <div class="relative flex h-full flex-1 items-center">
-    <label :for="id" class="absolute -top-10 left-0 -z-10">{{ label }}</label>
+  <div class="relative flex h-12 flex-1 items-center">
+    <label :for="id" class="absolute -top-7 left-0 -z-10">{{ label }}</label>
     <input
       :id="id"
       :value="modelValue"
       :name="id"
       :placeholder="placeholder"
-      type="text"
+      :type="type"
       class="w-full text-lg font-normal focus:outline-none"
       autocomplete="off"
       @input="onInput"
