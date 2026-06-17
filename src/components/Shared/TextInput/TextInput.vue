@@ -35,7 +35,7 @@ const onInput = (event: Event) => {
 
 <template>
   <div class="relative flex h-12 flex-1 items-center">
-    <label :for="id" class="absolute -top-7 left-0 -z-10">{{ label }}</label>
+    <label :for="id" class="absolute -top-7 left-0">{{ label }}</label>
     <input
       :id="id"
       :value="modelValue"
@@ -48,7 +48,7 @@ const onInput = (event: Event) => {
     />
     <span
       v-if="errorMessage"
-      class="text-brand-red-1 absolute top-12 left-0"
+      class="text-brand-red-1 absolute top-12 left-0 text-xs"
       data-test="error-message"
     >
       {{ errorMessage }}

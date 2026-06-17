@@ -58,11 +58,11 @@ const handleSubmit = async () => {
       :placeholder="placeholder"
       :type="type"
       :error-message="errorMessage.value"
-      class="rounded border px-4"
+      class="mt-12 rounded border px-4"
     />
     <button
       type="submit"
-      class="mt-7 w-full cursor-pointer rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      class="mt-7 w-full cursor-pointer rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white uppercase shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
       {{ submitButtonText }}
     </button>

@@ -7,7 +7,7 @@ const schema = object({
   fullName: string()
     .matches(
       /^[A-ZА-ЯІЇЄҐ][a-zа-яіїєґ]*(\s[A-ZА-ЯІЇЄҐ][a-zа-яіїєґ]*)+$/u,
-      'Please enter your full name as in example: John Johnson (Іван Іващенко)',
+      'Please enter your full name as in example: John Johnson',
     )
     .required('Full name is required'),
   password: string()
