@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/store/modules/auth/auth.ts'
 import validationSchema from '@/utils/validation/schemas/sign-in'
 import BaseForm from '@/components/Shared/BaseForm/BaseForm.vue'
+import type { AuthData } from '@/api/auth/types.ts'
 
 const fields = [
   {
@@ -18,6 +21,16 @@ const fields = [
     type: 'password',
   },
 ]
+
+const router = useRouter()
+const authStore = useAuthStore()
+
+const onSubmit = async (formData: AuthData) => {
+  const res = await authStore.signIn(formData)
+  if (res) {
+    router.replace({ name: 'home' })
+  }
+}
 </script>
 
 <template>
@@ -29,6 +42,7 @@ const fields = [
       :validation-schema="validationSchema"
       :fields="fields"
       submit-button-text="sign in"
+      @submit="onSubmit"
     />
     <div class="mt-6 flex flex-col text-center text-sm text-slate-900">
       Don't have an account yet?

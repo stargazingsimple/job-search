@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/store/modules/auth/auth.ts'
 import BaseButton from '@/components/Shared/BaseButton/BaseButton.vue'
 import TheSubNav from '@/components/Navigation/TheSubNav/TheSubNav.vue'
 
@@ -16,6 +17,7 @@ const NAV_ITEMS = [
 ]
 
 const route = useRoute()
+const authStore = useAuthStore()
 
 const showSubNav = computed(() => route.name === 'job-results')
 </script>
@@ -35,7 +37,7 @@ const showSubNav = computed(() => route.name === 'job-results')
           </ul>
         </nav>
         <div class="ml-auto flex h-full items-center">
-          <base-button text="Log out" />
+          <base-button text="Log out" @click="authStore.signOut" />
         </div>
       </div>
       <the-sub-nav v-if="showSubNav" />
