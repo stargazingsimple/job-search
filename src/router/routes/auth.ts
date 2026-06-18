@@ -17,6 +17,8 @@ export default {
     },
   ],
   meta: {
+    needAuth: false,
+    title: 'Authentication',
     layout: 'auth',
   },
 }

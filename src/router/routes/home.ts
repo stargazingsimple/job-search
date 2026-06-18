@@ -5,6 +5,8 @@ export default {
   name: 'home',
   component: HomeView,
   meta: {
+    needAuth: true,
+    title: 'Home',
     layout: 'main',
   },
 }

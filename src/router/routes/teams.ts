@@ -5,6 +5,8 @@ export default {
   name: 'teams',
   component: TeamsView,
   meta: {
+    needAuth: true,
+    title: 'Teams',
     layout: 'main',
   },
 }

@@ -1,7 +1,7 @@
 <template>
-  <main class="grid min-h-screen place-items-center px-6 py-24 sm:py-32 lg:px-8">
+  <main class="grid h-[calc(100vh-4rem)] place-items-center px-6 lg:px-8">
     <div class="text-center">
-      <p class="text-brand-blue-1 text-base font-semibold">404</p>
+      <p class="text-brand-blue-1 text-2xl font-semibold">404</p>
       <h1 class="mt-4 text-5xl font-semibold tracking-tight text-balance sm:text-7xl">
         Page not found
       </h1>

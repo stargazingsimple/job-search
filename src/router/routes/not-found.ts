@@ -5,6 +5,8 @@ export default {
   path: '/:pathMatch(.*)*',
   component: NotFoundView,
   meta: {
+    needAuth: true,
+    title: 'Not Found',
     layout: 'main',
   },
 }

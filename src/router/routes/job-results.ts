@@ -7,6 +7,8 @@ export default [
     name: 'job-results',
     component: JobResultsView,
     meta: {
+      needAuth: true,
+      title: 'Jobs',
       layout: 'main',
     },
   },
@@ -16,6 +18,8 @@ export default [
     component: JobView,
     props: true,
     meta: {
+      needAuth: true,
+      title: 'Job Details',
       layout: 'main',
     },
   },
