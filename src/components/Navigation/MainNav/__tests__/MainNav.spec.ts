@@ -1,5 +1,6 @@
 import { mount, type VueWrapper } from '@vue/test-utils'
 import { findComponentByPropertyValue } from '@/tests/utils.ts'
+import { createTestingPinia } from '@pinia/testing'
 import MainNav from '@/components/Navigation/MainNav/MainNav.vue'
 
 const { route } = vi.hoisted(() => {
@@ -23,6 +24,7 @@ describe('MainNav', () => {
     wrapper = mount(MainNav, {
       global: {
         stubs: ['fa-icon', 'router-link', 'the-sub-nav'],
+        plugins: [createTestingPinia({ stubActions: false })],
       },
     })
   }

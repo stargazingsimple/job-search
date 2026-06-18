@@ -12,9 +12,6 @@ interface AuthState {
   userData: User | null
 }
 
-const toast = useToast()
-const loader = useLoaderStore()
-
 let timer: ReturnType<typeof setTimeout>
 
 export const useAuthStore = defineStore('auth', {
@@ -32,6 +29,9 @@ export const useAuthStore = defineStore('auth', {
       this.userData = userData
     },
     async signIn(payload: AuthData) {
+      const loader = useLoaderStore()
+      const toast = useToast()
+
       loader[SHOW_LOADER]()
       try {
         const { data } = await signIn(payload)
@@ -71,13 +71,19 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     async signUp(payload: AuthData) {
+      const loader = useLoaderStore()
+      const toast = useToast()
+
       loader[SHOW_LOADER]()
       try {
         const { data } = await signUp(payload)
 
-        delete payload.password
+        const userDataWithoutPassword = {
+          email: payload.email,
+          fullName: payload.fullName,
+        }
 
-        const res = await userRegistration(payload as User, data.localId)
+        const res = await userRegistration(userDataWithoutPassword as User, data.localId)
 
         if (!res) return
 
@@ -127,5 +133,8 @@ export const useAuthStore = defineStore('auth', {
         })
       }
     },
+  },
+  getters: {
+    isAuthenticated: ({ localId }) => !!localId,
   },
 })
