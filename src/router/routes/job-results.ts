@@ -1,11 +1,8 @@
-import JobResultsView from '@/views/JobResultsView/JobResultsView.vue'
-import JobView from '@/views/JobView/JobView.vue'
-
 export default [
   {
     path: '/job/results',
     name: 'job-results',
-    component: JobResultsView,
+    component: () => import('@/views/JobResultsView/JobResultsView.vue'),
     meta: {
       needAuth: true,
       title: 'Jobs',
@@ -15,7 +12,7 @@ export default [
   {
     path: '/job/results/:id',
     name: 'job',
-    component: JobView,
+    component: () => import('@/views/JobView/JobView.vue'),
     props: true,
     meta: {
       needAuth: true,

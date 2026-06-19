@@ -1,6 +1,3 @@
-import SignIn from '@/components/Auth/SignIn/SignIn.vue'
-import SignUp from '@/components/Auth/SignUp/SignUp.vue'
-
 export default {
   name: 'auth',
   path: '/auth',
@@ -8,12 +5,12 @@ export default {
     {
       name: 'sign-in',
       path: 'sign-in',
-      component: SignIn,
+      component: () => import('@/components/Auth/SignIn/SignIn.vue'),
     },
     {
       name: 'sign-up',
       path: 'sign-up',
-      component: SignUp,
+      component: () => import('@/components/Auth/SignUp/SignUp.vue'),
     },
   ],
   meta: {

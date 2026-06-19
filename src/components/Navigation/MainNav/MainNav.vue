@@ -20,6 +20,7 @@ const route = useRoute()
 const authStore = useAuthStore()
 
 const showSubNav = computed(() => route.name === 'job-results')
+const userFullName = computed(() => authStore.userData?.fullName || 'User')
 </script>
 
 <template>
@@ -37,6 +38,7 @@ const showSubNav = computed(() => route.name === 'job-results')
           </ul>
         </nav>
         <div class="ml-auto flex h-full items-center">
+          <p class="mr-8">Hello, {{ userFullName }}!</p>
           <base-button text="Log out" @click="authStore.signOut" />
         </div>
       </div>

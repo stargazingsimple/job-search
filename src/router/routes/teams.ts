@@ -1,9 +1,7 @@
-import TeamsView from '@/views/TeamsView/TeamsView.vue'
-
 export default {
   path: '/teams',
   name: 'teams',
-  component: TeamsView,
+  component: () => import('@/views/TeamsView/TeamsView.vue'),
   meta: {
     needAuth: true,
     title: 'Teams',
